@@ -1,0 +1,15 @@
+set shiftwidth=4
+set expandtab
+set tabstop=4
+set showmatch
+set hls
+set cursorcolumn
+set bg=dark
+"set bg=light
+""filetype on
+syntax on
+"autocmd Filetype mail set textwidth=60
+"autocmd BufWritePre *.py execute ':silent !black %'
+"
+"set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:☠,tab:▸␣
+"se number
