@@ -2,14 +2,17 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 from dataclasses import dataclass
+from picture import Picture
 
-RADIUS = 0.10
+RADIUS = 0.15
 DT = 20.0
 
 @dataclass
 class Enemy:
     x: float
     y: float
+
+    image = Picture("enemy.jpg")
 
     def __init__(self, x: float, y: float):
         self.x = x
@@ -20,7 +23,7 @@ class Enemy:
         self.y += dy
 
     def draw(self):
-        stddraw.filledCircle(self.x, self.y, RADIUS)
+        stddraw.picture(self.image, self.x, self.y, 0.4, 0.4)
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
@@ -29,9 +32,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
 
     stddraw.clear(stddraw.BLACK)
     
-    rows = 6
-    cols = 8
-    d = 0.20
+    rows = 4
+    cols = 6
+    d = 0.40
 
     enemies = stdarray.create2D(rows, cols, Enemy(0.0, 0.0)) #intialized all enemies to zero, but could've just put (None)
     for i in range(rows):
@@ -68,6 +71,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
             for j in range(cols):
                 enemies[i][j].move(vx, 0)
 
+        #draws all the enemies according to the formating in class Enemy
         for i in range(rows):
             for j in range(cols):
                 enemies[i][j].draw()
