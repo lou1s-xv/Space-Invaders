@@ -53,7 +53,7 @@ class missile:
         self.alive = False
 
     def move(self, dy):
-        if self.y < 2.0:
+        if self.y < 3.0:
             self.y += dy
         else:
             self.alive = False
@@ -62,7 +62,7 @@ class missile:
         if self.alive:
             stddraw.filledCircle(self.x, self.y, 0.05)
 
-def create_enemies(rows: int, cols: int, distance, e_pic: str) -> list[list[float]]:
+def create_enemies(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[list[float]]:
     
     pic = e_pic
     d = distance
@@ -70,8 +70,8 @@ def create_enemies(rows: int, cols: int, distance, e_pic: str) -> list[list[floa
     #intialized all enemies to zero, but could've just put (None)
     for i in range(rows):
         for j in range(cols):
-            x = -0.8 + j*d
-            y = 0.8 - i*d
+            x = -x_pos + j*d
+            y = y_pos - i*d
             enemies[i][j] = Enemy(x,y,pic)
     return enemies
 
@@ -84,7 +84,7 @@ def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float):
             enemy = enemies[i][j]
                 
             #condition that checks if wall reached
-            if abs(enemy.x + vx) + RADIUS > 2.0:
+            if abs(enemy.x + vx) + RADIUS > 3.0:
                     
                 #changes the horizontal direction when edge reached
                 vx = -vx
@@ -95,7 +95,7 @@ def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float):
                         enemies[n][m].move(0,vy)
 
                 #play sound
-                enemy.wall_hit(11, 0.1)
+                enemy.wall_hit(12, 0.07)
 
     #moves all the enemies horizontally based on direction in (vx)
     for i in range(rows):
@@ -115,34 +115,51 @@ def check_hits(missiles, enemies):
         if mis.alive:
             for row in enemies:
                 for enemy in row:
-                    if enemy.alive and abs(enemy.x - mis.x) < 0.1 and abs(enemy.y - mis.y) < 0.1:
+                    if enemy.alive and abs(enemy.x - mis.x) < 0.20 and abs(enemy.y - mis.y) < 0.20:
                         enemy.dead()
                         mis.dead()
+#                        stdaudio.playSamples(explosion)
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
-    stddraw.setXscale(-2.0, 2.0)
-    stddraw.setYscale(-2.0, 2.0)
+    stddraw.setXscale(-3.0, 3.0)
+    stddraw.setYscale(-3.0, 3.0)
 
     stddraw.clear(stddraw.BLACK)
     
-    rows = 4
-    cols = 6
-    d = 0.40
+    rows_1 = 2
+    cols_1 = 8
+    rows_2 = 2
+    cols_2 = 8
+    rows_3 = 2
+    cols_3 = 8
+    
+    d = 0.425
 
-    enemies = create_enemies(rows, cols, d, "enemy.jpg")
+    enemies_1 = create_enemies(rows_1, cols_1, d, 0.8, 1.6, "enemy.jpg")
+    enemies_2 = create_enemies(rows_2, cols_2, d, 0.8, 0.8, "enemy2.jpg")
+    enemies_3 = create_enemies(rows_3, cols_3, d, 0.8, 0.0, "enemy3.jpg")
+ 
 
     missiles = stdarray.create1D(0, None)
     #missiles.append(missile(0.0, -1.5))
     
     stddraw.setPenColor(stddraw.WHITE)
 
-    vx = 0.015
-    vy = -0.05
+    vx_1 = 0.025
+    vy_1 = -0.10
+    vx_2 = 0.025
+    vy_2 = -0.10
+    vx_3 = 0.025
+    vy_3 = -0.10
+
+
     mvy = 0.05
     p = 0
     pint = 30
     #n = 0
+
+#    explosion = playnotes.explosion(0.5)
         
     while True:
         
@@ -150,17 +167,22 @@ def main() -> None:  # Need the return type for mypy to type-check the body
 
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
-        vx = animate_enemies(enemies, rows, cols, vx, vy)
-        
+        vx_1 = animate_enemies(enemies_1, rows_1, cols_1, vx_1, vy_1)
+        vx_2 = animate_enemies(enemies_2, rows_2, cols_2, vx_2, vy_2)
+        vx_3 = animate_enemies(enemies_3, rows_3, cols_3, vx_3, vy_3)
+
+
         if (p % pint == 0):
-            missiles.append(missile(0.0, -1.5))
+            missiles.append(missile(0.0, -2.5))
 
         for mis in missiles:
             if mis.alive:
                 mis.move(mvy)
                 mis.draw()
 
-        check_hits(missiles, enemies)
+        check_hits(missiles, enemies_1)
+        check_hits(missiles, enemies_2)
+        check_hits(missiles, enemies_3)
 
         stddraw.show(DT)
         
