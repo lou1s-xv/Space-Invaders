@@ -1,8 +1,9 @@
 import sys
 import math
 import stdio, stdrandom, stddraw, stdaudio, stdarray
-import gamewindow, env, shooter
+import env, shooter
 import enemies as en
+import gamewindow as gw
 
 # X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py
 
@@ -26,8 +27,8 @@ class Missile:
         self.ang = ang
 
     def update_pos(self, FPS): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
-        self.x += MISSILE_VELOCITY * math.sin(self.ang) / gamewindow.FPS
-        self.y += MISSILE_VELOCITY * math.cos(self.ang) / gamewindow.FPS
+        self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
+        self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
 
     def draw_missile(self):
         stddraw.setPenColor(MISSILE_COLOR)
@@ -36,11 +37,11 @@ class Missile:
 
 def detect_collision(missiles, enemies): # destroys missiles and enemies in collisions, as well as out of bounds missiles
     for i in range(len(missiles)):
-        if missiles[i].x < X_MIN or missiles[i].x > X_MAX or missiles[i].y < Y_MIN or missiles[i].y > Y_MAX:
+        if missiles[i].x < gw.X_MIN or missiles[i].x > gw.X_MAX or missiles[i].y < gw.Y_MIN or missiles[i].y > gw.Y_MAX:
             missiles.pop(i) 
         else:
             for k in range(env.BUNKER_NR):
-                if X_MIN + (BUNKERWIDTH * (2 * k + 1)) < missiles[i].x < X_MIN + (BUNKERWIDTH * (2 * (k + 1))) and Y_MIN + BUNKER_DIST < missiles[i].y < Y_MIN + BUNKER_DIST + BUNKER_THICKNESS:
+                if gw.X_MIN + (env.BUNKERWIDTH * (2 * k + 1)) < missiles[i].x < gw.X_MIN + (env.BUNKERWIDTH * (2 * (k + 1))) and gw.Y_MIN + env.BUNKER_DIST < missiles[i].y < gw.Y_MIN + env.BUNKER_DIST + env.BUNKER_THICKNESS:
                     missiles.pop[i]
                     break
             for k in range(len(enemies)):
