@@ -21,7 +21,6 @@ class Enemy:
     def __init__(self, x: float, y: float, pic:str):
         self.x = x
         self.y = y
-        self.pic = pic
         self.image = Picture(pic) 
     
     def move(self, dx, dy):
@@ -75,7 +74,7 @@ def create_enemies(rows: int, cols: int, distance, x_pos: float, y_pos: float, e
             enemies[i][j] = Enemy(x,y,pic)
     return enemies
 
-def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float):
+def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float): #Make so that all enemies get animated at the same time
 
     
     #checks if edge has been reached on each enemy
@@ -110,7 +109,7 @@ def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float):
     return vx
 
 
-def check_hits(missiles, enemies):
+def check_hits(missiles, enemies, explosion):
     for mis in missiles:
         if mis.alive:
             for row in enemies:
@@ -118,7 +117,7 @@ def check_hits(missiles, enemies):
                     if enemy.alive and abs(enemy.x - mis.x) < 0.20 and abs(enemy.y - mis.y) < 0.20:
                         enemy.dead()
                         mis.dead()
-#                        stdaudio.playSamples(explosion)
+                        stdaudio.playSamples(explosion)
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
@@ -134,7 +133,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     rows_3 = 2
     cols_3 = 8
     
-    d = 0.425
+    d = 0.45
 
     enemies_1 = create_enemies(rows_1, cols_1, d, 0.8, 1.6, "enemy.jpg")
     enemies_2 = create_enemies(rows_2, cols_2, d, 0.8, 0.8, "enemy2.jpg")
@@ -154,12 +153,12 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     vy_3 = -0.10
 
 
-    mvy = 0.05
+    mvy = 0.10
     p = 0
     pint = 30
     #n = 0
 
-#    explosion = playnotes.explosion(0.5)
+    explosion = playnotes.explosion(0.5)
         
     while True:
         
@@ -180,9 +179,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
                 mis.move(mvy)
                 mis.draw()
 
-        check_hits(missiles, enemies_1)
-        check_hits(missiles, enemies_2)
-        check_hits(missiles, enemies_3)
+        check_hits(missiles, enemies_1, explosion)
+        check_hits(missiles, enemies_2, explosion)
+        check_hits(missiles, enemies_3, explosion)
 
         stddraw.show(DT)
         

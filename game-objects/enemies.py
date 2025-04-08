@@ -21,7 +21,6 @@ class Enemy:
     def __init__(self, x: float, y: float, pic:str):
         self.x = x
         self.y = y
-        self.pic = pic
         self.image = Picture(pic) 
     
     def move(self, dx, dy):
@@ -75,7 +74,7 @@ def create_enemies(rows: int, cols: int, distance, x_pos: float, y_pos: float, e
             enemies[i][j] = Enemy(x,y,pic)
     return enemies
 
-def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float):
+def animate_enemies(enemies, rows: int, cols: int, vx: float, vy: float): #Make so that all enemies get animated at the same time
 
     
     #checks if edge has been reached on each enemy
@@ -118,7 +117,7 @@ def check_hits(missiles, enemies):
                     if enemy.alive and abs(enemy.x - mis.x) < 0.20 and abs(enemy.y - mis.y) < 0.20:
                         enemy.dead()
                         mis.dead()
-#                        stdaudio.playSamples(explosion)
+#                        stdaudio.playSamples(Explosion)
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
@@ -154,7 +153,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     vy_3 = -0.10
 
 
-    mvy = 0.05
+    mvy = 0.10
     p = 0
     pint = 30
     #n = 0
