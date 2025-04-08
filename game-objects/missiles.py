@@ -1,7 +1,7 @@
 import sys
 import math
 import stdio, stdrandom, stddraw, stdaudio, stdarray
-import gamewindow
+import gamewindow, enemies
 
 # X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py ???
 
