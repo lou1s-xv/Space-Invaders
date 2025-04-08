@@ -15,9 +15,9 @@ PI = math.pi
 
 class Missile:
 
-    x = 0
-    y = 0
-    ang = 0 # measured from vert, right is +
+    x : float
+    y : float
+    ang : float # measured from vert, right is +
 
     def __init__(self, pos_x, pos_y, ang):
         self.x = pos_x
