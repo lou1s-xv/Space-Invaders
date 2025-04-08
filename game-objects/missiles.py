@@ -33,7 +33,7 @@ class Missile:
         stddraw.filledCircle(self.x, self.y, MISSILE_SIZE)
 
 
-def detect_collision(missiles, enemies): # implemented in enemies or in missile?
+def detect_collision(missiles, enemies): # destroys missiles and enemies in collisions, as well as out of bounds missiles
     for i in range(len(missiles)):
         if missiles[i].x < X_MIN or missiles[i].x > X_MAX or missiles[i].y < Y_MIN or missiles[i].y > Y_MAX:
             missiles.pop(i)
