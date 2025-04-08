@@ -38,7 +38,7 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
         if missiles[i].x < X_MIN or missiles[i].x > X_MAX or missiles[i].y < Y_MIN or missiles[i].y > Y_MAX:
             missiles.pop(i)
         for k in range(len(enemies)):
-            if (missiles[i].x in range(enemies[k].x - (ENEMY_SIZE / 2), enemies[k].x + (ENEMY_SIZE / 2))) and (missiles[i].y in range(enemies[k].y - (ENEMY_SIZE / 2), enemies[k].y + (ENEMY_SIZE / 2))):
+            if (enemies[k].x - (ENEMY_SIZE / 2) < missiles[i].x < enemies[k].x + (ENEMY_SIZE / 2)) and (enemies[k].y - (ENEMY_SIZE / 2) < missiles[i].y < enemies[k].y + (ENEMY_SIZE / 2)):
                 enemies.pop(k)
                 missiles.pop(i)
     
