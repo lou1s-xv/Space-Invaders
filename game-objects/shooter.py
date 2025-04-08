@@ -3,7 +3,7 @@ import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 
 SHOOTER_SIZE = 0.1
-
+SHHOTER_DIST = 0.15
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
