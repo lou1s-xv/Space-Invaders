@@ -1,18 +1,22 @@
 import stddraw
-import shooter, gamewindow
+import shooter
+import gamewindow as gw
 
 BUNKER_NR = 3
 BUNKER_THICKNESS = 0.1
 BUNKER_DIST_SHTR = 0.15
-BUNKER_DIST = SHOOTER_DIST + SHOOTER_SIZE + BUNKER_DIST_SHTR
-BUNKER_WIDTH = (X_MAX - X_MIN) / BUNKER_NR
+BUNKER_DIST = shooter.SHOOTER_DIST + shooter.SHOOTER_SIZE + BUNKER_DIST_SHTR
+BUNKER_WIDTH = (gw.X_MAX - gw.X_MIN) / (2 * BUNKER_NR + 1)
 
 def draw_bunkers(): # if shooter behind bunker, disable shooting
+    stddraw.setPenColor(stddraw.BLACK)
     for i in range(BUNKER_NR):
-        stddraw.filledRectangle(X_MIN + BUNKER_WIDTH * (2 * i + 1), Y_MIN + BUNKER_DIST, X_MIN + BUNKER_WIDTH, BUNKER_THICKNESS)
-    
+        stddraw.filledRectangle(gw.X_MIN + BUNKER_WIDTH * (2 * i + 1), gw.Y_MIN + BUNKER_DIST, BUNKER_WIDTH, BUNKER_THICKNESS)
+
 def main():
-    gamewindow.show_window()
+    gw.init()
+    draw_bunkers()
+    gw.show_window()
 
 if __name__ == "__main__":
     main()
