@@ -3,7 +3,7 @@ import math
 import stdio, stdrandom, stddraw, stdaudio, stdarray
 import gamewindow, enemies
 
-# X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py ???
+# X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py
 
 # ENEMY_SIZE -> enemies.py ???
 
@@ -37,10 +37,11 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
     for i in range(len(missiles)):
         if missiles[i].x < X_MIN or missiles[i].x > X_MAX or missiles[i].y < Y_MIN or missiles[i].y > Y_MAX:
             missiles.pop(i)
-        for k in range(len(enemies)):
-            if (enemies[k].x - (ENEMY_SIZE / 2) < missiles[i].x < enemies[k].x + (ENEMY_SIZE / 2)) and (enemies[k].y - (ENEMY_SIZE / 2) < missiles[i].y < enemies[k].y + (ENEMY_SIZE / 2)):
-                enemies.pop(k)
-                missiles.pop(i)
+        else:
+            for k in range(len(enemies)):
+                if (enemies[k].x - (ENEMY_SIZE / 2) < missiles[i].x < enemies[k].x + (ENEMY_SIZE / 2)) and (enemies[k].y - (ENEMY_SIZE / 2) < missiles[i].y < enemies[k].y + (ENEMY_SIZE / 2)):
+                    enemies.pop(k)
+                    missiles.pop(i)
     
 # TODO: make module tests
 
