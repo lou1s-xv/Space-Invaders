@@ -12,7 +12,7 @@ def draw_bunkers(): # if shooter behind bunker, disable shooting
         stddraw.filledRectangle(X_MIN + BUNKER_WIDTH * (2 * i + 1), Y_MIN + BUNKER_DIST, X_MIN + BUNKER_WIDTH, BUNKER_THICKNESS)
     
 def main():
-    pass
+    gamewindow.show_window()
 
 if __name__ == "__main__":
     main()
