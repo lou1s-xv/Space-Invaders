@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import playnotes
 import playthattune
 from picture import Picture
+import levellayout as lvl
 
 RADIUS = 0.15
 DT = 20.0
@@ -41,27 +42,7 @@ class Enemy:
         final = playthattune.chord(freq, time)
         stdaudio.playSamples(final)
 
-@dataclass
-class missile:
-
-    x:float
-    y:float
-    alive = True
-
-    def dead(self):
-        self.alive = False
-
-    def move(self, dy):
-        if self.y < 3.0:
-            self.y += dy
-        else:
-            self.alive = False
-
-    def draw(self):
-        if self.alive:
-            stddraw.filledCircle(self.x, self.y, 0.05)
-
-def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[list[float]]:
+def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[list[Enemy]]:
     
     d = distance
     enemies = stdarray.create2D(rows, cols, None) 
@@ -135,23 +116,6 @@ def animate_mystery(mystery: Enemy, vx: float):
     mystery.draw()
 
 
-def check_hit_mystery(missiles, mystery):
-    for mis in missiles:
-        if mis.alive:
-            if mystery.alive and abs(mystery.x + mis.x) < 0.20 and abs(mystery.y + mis.y) < 0.20:
-                mystery.dead()
-                mis.dead()
-
-def check_hits(missiles, enemies):
-    for mis in missiles:
-        if mis.alive:
-            for row in enemies:
-                for enemy in row:
-                    if enemy.alive and abs(enemy.x - mis.x) < 0.20 and abs(enemy.y - mis.y) < 0.20:
-                        enemy.dead()
-                        mis.dead()
-#                        stdaudio.playSamples(Explosion)
-
 def main() -> None:  # Need the return type for mypy to type-check the body
 
     stddraw.setXscale(-3.0, 3.0)
@@ -159,39 +123,19 @@ def main() -> None:  # Need the return type for mypy to type-check the body
 
     stddraw.clear(stddraw.BLACK)
     
-    rows_1 = 2
-    cols_1 = 8
-    rows_2 = 2
-    cols_2 = 8
-    rows_3 = 2
-    cols_3 = 8
-    
-    d = 0.35
-
     prize = create_mystery(2.8, 2.8, "enemy4.jpg")
-    enemies_1 = create_infantry(rows_1, cols_1, d, 0.8, 1.6, "enemy.jpg")
-    enemies_2 = create_infantry(rows_2, cols_2, d, 0.8, 0.8, "enemy2.jpg")
-    enemies_3 = create_infantry(rows_3, cols_3, d, 0.8, 0.0, "enemy3.jpg")
- 
-
-    missiles = stdarray.create1D(0, None)
-    #missiles.append(missile(0.0, -1.5))
-    
+    enemies_1 = create_infantry(lvl.rows_1, lvl.cols_1, lvl.d, 0.8, 1.6, "enemy.jpg")
+    enemies_2 = create_infantry(lvl.rows_2, lvl.cols_2, lvl.d, 0.8, 0.8, "enemy2.jpg")
+    enemies_3 = create_infantry(lvl.rows_3, lvl.cols_3, lvl.d, 0.8, 0.0, "enemy3.jpg")
+        
     stddraw.setPenColor(stddraw.WHITE)
 
     vx = 0.025
     vy = -0.10
     pvx = -0.0125
-    vx_2 = 0.025
-    vy_2 = -0.10
-    vx_3 = 0.025
-    vy_3 = -0.10
 
-
-    mvy = 0.10
     n = 0
     nint = 30
-    #n = 0
 
 #    explosion = playnotes.explosion(0.5)
 
@@ -205,27 +149,12 @@ def main() -> None:  # Need the return type for mypy to type-check the body
 
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
-        vx = animate_enemies(enemies_1, enemies_2, enemies_3, rows_1, cols_1, vx, vy)
+        vx = animate_enemies(enemies_1, enemies_2, enemies_3, lvl.rows_1, lvl.cols_1, vx, vy)
         
         animate_mystery(prize, pvx)
-
             
-        if (n % nint == 0):
-            missiles.append(missile(0.0, -2.5))
-
-        for mis in missiles:
-            if mis.alive:
-                mis.move(mvy)
-                mis.draw()
-
-        check_hits(missiles, enemies_1)
-        check_hits(missiles, enemies_2)
-        check_hits(missiles, enemies_3)
-        check_hit_mystery(missiles, prize)
-
         stddraw.show(DT)
         
-#        p += 1 
         n += 1
 
 if __name__ == "__main__":
