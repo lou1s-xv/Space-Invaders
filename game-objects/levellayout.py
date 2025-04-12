@@ -1,25 +1,37 @@
 import gamewindow
 
+VX = 0.025
+VY = -0.1
+PVX = -0.0125
+
 # LVL 1
 
-#rows_1 = 2
-#cols_1 = 8
-#rows_2 = 2
-#cols_2 = 8
-#rows_3 = 2
-#cols_3 = 8
-#d = 0.35
-#vx = 0.025
-#vy = -0.10
-#pvx = -0.0125
+# READ IN FROM DATA FILE, STORE VALS
+
+with open(LVL1_ENEMIES, mode='rb') as file: # b is important -> binary
+    fileContent = file.read()
+
+#TODO: Do rest
 
 # LVL 2
 
+with open(LVL2_ENEMIES, mode='rb') as file: # b is important -> binary
+    fileContent = file.read()
+
 # LVL 3
+
+with open(LVL3_ENEMIES, mode='rb') as file: # b is important -> binary
+    fileContent = file.read()
 
 # LVL 4
 
+with open(LVL4_ENEMIES, mode='rb') as file: # b is important -> binary
+    fileContent = file.read()
+
 # LVL 5 - BOSS
+
+with open(LVL5_ENEMIES, mode='rb') as file: # b is important -> binary
+    fileContent = file.read()
 
 def main():
     pass
