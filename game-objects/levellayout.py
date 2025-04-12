@@ -11,7 +11,7 @@ PVX = -0.0125
 with open(LVL1_ENEMIES, mode='rb') as file: # b is important -> binary
     fileContent = file.read()
 
-#TODO: Do rest
+#TODO: struct.unpack('iiii', fileContent[:20]) ???
 
 # LVL 2
 
