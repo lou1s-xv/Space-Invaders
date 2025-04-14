@@ -5,6 +5,9 @@ set showmatch
 set hls
 set cursorcolumn
 set bg=dark
+set noundofile
+set nobackup
+set nowritebackup
 "set bg=light
 ""filetype on
 syntax on
