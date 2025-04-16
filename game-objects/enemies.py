@@ -2,7 +2,7 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 from dataclasses import dataclass
-import playwav
+import threading
 from picture import Picture
 import levellayout as lvl
 
@@ -31,8 +31,9 @@ class Enemy:
     
     #wall hit sound
     def wall_hit(self):
-        stdaudio.playFile("beep")
-        
+      threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
+
+
 def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[Enemy]:
     d = distance
     enemies = stdarray.create1D(rows * cols, None) 
