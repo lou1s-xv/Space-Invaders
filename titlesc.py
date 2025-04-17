@@ -3,6 +3,7 @@ import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio # type: ignore
 from picture import Picture
 import constants as cons
+import gamewindow as gw
 
 class ene:
     x: float
@@ -36,39 +37,45 @@ def bgen(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str)
     #intialized all enemies to (None)
     for i in range(rows):
         for j in range(cols):
-            x = -x_pos + j*d
+            x = x_pos + j*d
             y = y_pos - i*d
             enemies[i * cols + j] = ene(x,y,e_pic)
     return enemies
 
 def mbgen(enemies, rows: int, cols: int, vx: float, vy: float):
+    
+    margin = cons.w/2
+
+    hit_wall = False
+
     #Made so that all enemies get animated at the same time
     #checks if edge has been reached on each enemy
-    for i in range(rows):
-        for j in range(cols):
-            enemy = enemies[i * cols + j]
-            
-            #condition that checks if wall reached
-            if (abs(enemy.x + vx) + cons.RADIUS > 3.0) :
+    for enemy in enemies:
+        
+        #condition that checks if wall reached
+        if (enemy.x + margin) > gw.X_MAX or (enemy.x - margin) < gw.X_MIN:
+            hit_wall = True
+            break
+    
+    if hit_wall:
 
-                #changes the horizontal direction when edge reached
-                vx = -vx
+        #changes the horizontal direction when edge reached
+        vx = -vx
 
     #moves all the enemies horizontally based on direction in (vx)
-    for i in range(rows):
-        for j in range(cols):
-            enemies[i * cols + j].move(vx, 0)
-
+    for enemy in enemies:
+        enemy.move(vx, 0)
+    
     #draws all the enemies according to the formating in class Enemy
-    for i in range(rows):
-        for j in range(cols):
-            enemies[i * cols + j].draw(cons.tw, cons.th)
+    for enemy in enemies:
+        enemy.draw(cons.tw, cons.th)
+    
     #returns vx so the horizontal direction can be updated
     return vx
 
 def zoomcen(enemies, rows, cols, step_size, sx, sy):
   
-    spacing = 0.35  # space between enemies
+    spacing = 0.55  # space between enemies
     targets = []
 
     # Assign each enemy its final target position
@@ -117,7 +124,7 @@ def showtitle_sc():
     #frames = [image1, image2, image3]
     #frame_index = 0
 
-    enemies1 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 2.4, "enemy.jpg")
+    enemies1 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 5, 9, "enemy.jpg")
     #enemies2 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 1.6, "enemy2.jpg")
     vx = cons.t_vx 
 
@@ -134,7 +141,7 @@ def showtitle_sc():
         #stddraw.text(0, 2, "SPACE INVADERS")
         stddraw.picture(Picture("Title.png"))
         stddraw.setFontSize(20)
-        stddraw.text(0, -2, "Press SPACE to start...")
+        stddraw.text(5, 2, "Press SPACE to start...")
         stddraw.show(100)
 
         #frame_index = (frame_index + 1) % len(frames)
@@ -144,7 +151,7 @@ def showtitle_sc():
             if key == ' ':
                 break
     
-    zoomcen(enemies1, cons.inf_rows1, cons.inf_cols1, 0.01, -0.8, 1.6)
+    zoomcen(enemies1, cons.inf_rows1, cons.inf_cols1, 0.01, 5, 8)
     #zoomcen(enemies2, cons.inf_rows1, cons.inf_cols1, 0.01, -0.8, 0.8)
 
     stddraw.clear(stddraw.BLACK)
@@ -154,8 +161,8 @@ def showtitle_sc():
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
-    stddraw.setXscale(-3.0, 3.0)
-    stddraw.setYscale(-3.0, 3.0)
+    stddraw.setXscale(gw.X_MIN, gw.X_MAX)
+    stddraw.setYscale(gw.Y_MIN, gw.Y_MAX)
     showtitle_sc() 
 
 if __name__ == "__main__":
