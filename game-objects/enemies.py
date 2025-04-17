@@ -4,7 +4,7 @@ import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 from dataclasses import dataclass
 import threading
 from picture import Picture
-import levellayout as lvl
+import constants as cons
 
 
 class Enemy:
@@ -25,7 +25,7 @@ class Enemy:
     
     #Draws the enemy based on image
     def draw(self):
-        stddraw.picture(self.image, self.x, self.y, lvl.w, lvl.h)
+        stddraw.picture(self.image, self.x, self.y, cons.w, cons.h)
     
     #wall hit sound
     def wall_hit(self):
@@ -57,7 +57,7 @@ def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: i
             enemy_3 = enemies_3[i * cols + j]
 
             #condition that checks if wall reached
-            if (abs(enemy_1.x + vx) + lvl.RADIUS > 3.0) or (abs(enemy_2.x + vx) + lvl.RADIUS > 3.0) or (abs(enemy_3.x + vx) + lvl.RADIUS > 3.0):
+            if (abs(enemy_1.x + vx) + cons.RADIUS > 3.0) or (abs(enemy_2.x + vx) + cons.RADIUS > 3.0) or (abs(enemy_3.x + vx) + cons.RADIUS > 3.0):
                     
                 #changes the horizontal direction when edge reached
                 vx = -vx
@@ -73,7 +73,7 @@ def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: i
                 enemy_1.wall_hit()
             
             #checks if the bottom was reached
-            if (abs(enemy_1.y + vy) + lvl.RADIUS > 3.0) or (abs(enemy_2.y + vy) + lvl.RADIUS > 3.0) or (abs(enemy_3.y + vy) + lvl.RADIUS > 3.0):
+            if (abs(enemy_1.y + vy) + cons.RADIUS > 3.0) or (abs(enemy_2.y + vy) + cons.RADIUS > 3.0) or (abs(enemy_3.y + vy) + cons.RADIUS > 3.0):
                 running[0] = False
 
 
@@ -117,14 +117,14 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     
     #Creating the various enemies
     mystery = create_mystery(2.8, 2.8, "enemy4.jpg")
-    enemies_1 = create_infantry(lvl.inf_rows1, lvl.inf_cols1, lvl.inf_d, 0.8, 1.6, "enemy.jpg")
-    enemies_2 = create_infantry(lvl.inf_rows2, lvl.inf_cols2, lvl.inf_d, 0.8, 0.8, "enemy2.jpg")
-    enemies_3 = create_infantry(lvl.inf_rows3, lvl.inf_cols3, lvl.inf_d, 0.8, 0.0, "enemy3.jpg")
+    enemies_1 = create_infantry(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 1.6, "enemy.jpg")
+    enemies_2 = create_infantry(cons.inf_rows2, cons.inf_cols2, cons.inf_d, 0.8, 0.8, "enemy2.jpg")
+    enemies_3 = create_infantry(cons.inf_rows3, cons.inf_cols3, cons.inf_d, 0.8, 0.0, "enemy3.jpg")
         
     stddraw.setPenColor(stddraw.WHITE)
     
     #vx has to be defined in main in order for the direction to be updated
-    vx = lvl.inf_vx
+    vx = cons.inf_vx
     
     #Game over check variable
     running: list[bool] = [True]
@@ -136,11 +136,11 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
-        vx = animate_enemies(enemies_1, enemies_2, enemies_3, lvl.inf_rows1, lvl.inf_cols1, vx, lvl.inf_vy, running)
+        vx = animate_enemies(enemies_1, enemies_2, enemies_3, cons.inf_rows1, cons.inf_cols1, vx, cons.inf_vy, running)
         
-        animate_mystery(mystery, lvl.mvx)
+        animate_mystery(mystery, cons.mvx)
             
-        stddraw.show(lvl.DT)
+        stddraw.show(cons.DT)
         
     game_over()
 
