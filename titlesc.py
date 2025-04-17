@@ -2,7 +2,7 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio # type: ignore
 from picture import Picture
-import levellayout as lvl
+import constants as cons
 
 class ene:
     x: float
@@ -49,7 +49,7 @@ def mbgen(enemies, rows: int, cols: int, vx: float, vy: float):
             enemy = enemies[i * cols + j]
             
             #condition that checks if wall reached
-            if (abs(enemy.x + vx) + lvl.RADIUS > 3.0) :
+            if (abs(enemy.x + vx) + cons.RADIUS > 3.0) :
 
                 #changes the horizontal direction when edge reached
                 vx = -vx
@@ -62,7 +62,7 @@ def mbgen(enemies, rows: int, cols: int, vx: float, vy: float):
     #draws all the enemies according to the formating in class Enemy
     for i in range(rows):
         for j in range(cols):
-            enemies[i * cols + j].draw(lvl.tw, lvl.th)
+            enemies[i * cols + j].draw(cons.tw, cons.th)
     #returns vx so the horizontal direction can be updated
     return vx
 
@@ -92,7 +92,7 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
             stddraw.clear(stddraw.BLACK)
             #stddraw.picture(Picture("Portal.jpg"))
             for e in enemies:
-                e.draw(lvl.tw, lvl.th)
+                e.draw(cons.tw, cons.th)
             stddraw.show(0.025)
 
     # Enemies now at center — begin "marching forward"
@@ -103,7 +103,7 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
         stddraw.clear(stddraw.BLACK)
         scale = (size_step + 1) / grow_steps * final_size
         for enemy in enemies:
-            enemy.draw_scaled(scale, lvl.tw, lvl.th)
+            enemy.draw_scaled(scale, cons.tw, cons.th)
         stddraw.show(10)
     #stddraw.picture(Picture("ingame.jpg"))
     stddraw.show(2000)
@@ -117,17 +117,17 @@ def showtitle_sc():
     #frames = [image1, image2, image3]
     #frame_index = 0
 
-    enemies1 = bgen(lvl.inf_rows1, lvl.inf_cols1, lvl.inf_d, 0.8, 2.4, "enemy.jpg")
-    #enemies2 = bgen(lvl.inf_rows1, lvl.inf_cols1, lvl.inf_d, 0.8, 1.6, "enemy2.jpg")
-    vx = lvl.t_vx 
+    enemies1 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 2.4, "enemy.jpg")
+    #enemies2 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 1.6, "enemy2.jpg")
+    vx = cons.t_vx 
 
     stddraw.setPenColor(stddraw.WHITE)
     while True:
         stddraw.clear(stddraw.BLACK)
         #stddraw.picture(image3)
 
-        vx = mbgen(enemies1, lvl.inf_rows1, lvl.inf_cols1, vx, 0)
-        #vx = mbgen(enemies2, lvl.inf_rows1, lvl.inf_cols1, vx, 0)
+        vx = mbgen(enemies1, cons.inf_rows1, cons.inf_cols1, vx, 0)
+        #vx = mbgen(enemies2, cons.inf_rows1, cons.inf_cols1, vx, 0)
 
         # Draw title text on top (unchanging)
         #stddraw.setFontSize(40)
@@ -144,11 +144,11 @@ def showtitle_sc():
             if key == ' ':
                 break
     
-    zoomcen(enemies1, lvl.inf_rows1, lvl.inf_cols1, 0.01, -0.8, 1.6)
-    #zoomcen(enemies2, lvl.inf_rows1, lvl.inf_cols1, 0.01, -0.8, 0.8)
+    zoomcen(enemies1, cons.inf_rows1, cons.inf_cols1, 0.01, -0.8, 1.6)
+    #zoomcen(enemies2, cons.inf_rows1, cons.inf_cols1, 0.01, -0.8, 0.8)
 
     stddraw.clear(stddraw.BLACK)
-    stddraw.show(lvl.DT)
+    stddraw.show(cons.DT)
 
     
 
