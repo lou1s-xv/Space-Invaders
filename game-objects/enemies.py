@@ -2,12 +2,10 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 from dataclasses import dataclass
-import playwav
+import threading
 from picture import Picture
 import levellayout as lvl
 
-RADIUS = 0.15
-DT = 20.0
 
 class Enemy:
     x: float
@@ -27,12 +25,13 @@ class Enemy:
     
     #Draws the enemy based on image
     def draw(self):
-        stddraw.picture(self.image, self.x, self.y, 0.3, 0.3)
+        stddraw.picture(self.image, self.x, self.y, lvl.w, lvl.h)
     
     #wall hit sound
     def wall_hit(self):
-        stdaudio.playFile("beep")
-        
+      threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
+
+
 def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[Enemy]:
     d = distance
     enemies = stdarray.create1D(rows * cols, None) 
@@ -58,7 +57,7 @@ def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: i
             enemy_3 = enemies_3[i * cols + j]
 
             #condition that checks if wall reached
-            if (abs(enemy_1.x + vx) + RADIUS > 3.0) or (abs(enemy_2.x + vx) + RADIUS > 3.0) or (abs(enemy_3.x + vx) + RADIUS > 3.0):
+            if (abs(enemy_1.x + vx) + lvl.RADIUS > 3.0) or (abs(enemy_2.x + vx) + lvl.RADIUS > 3.0) or (abs(enemy_3.x + vx) + lvl.RADIUS > 3.0):
                     
                 #changes the horizontal direction when edge reached
                 vx = -vx
@@ -74,7 +73,7 @@ def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: i
                 enemy_1.wall_hit()
             
             #checks if the bottom was reached
-            if (abs(enemy_1.y + vy) + RADIUS > 3.0) or (abs(enemy_2.y + vy) + RADIUS > 3.0) or (abs(enemy_3.y + vy) + RADIUS > 3.0):
+            if (abs(enemy_1.y + vy) + lvl.RADIUS > 3.0) or (abs(enemy_2.y + vy) + lvl.RADIUS > 3.0) or (abs(enemy_3.y + vy) + lvl.RADIUS > 3.0):
                 running[0] = False
 
 
@@ -141,7 +140,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         
         animate_mystery(mystery, lvl.mvx)
             
-        stddraw.show(DT)
+        stddraw.show(lvl.DT)
         
     game_over()
 
