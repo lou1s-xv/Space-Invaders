@@ -1,7 +1,7 @@
 import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
-from dataclasses import dataclass
+import gamewindow as gw
 import threading
 from picture import Picture
 import constants as cons
@@ -38,7 +38,7 @@ def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, 
     #intialized all enemies to (None)
     for i in range(rows):
         for j in range(cols):
-            x = -x_pos + j*d
+            x = x_pos + j*d
             y = y_pos - i*d
             enemies[i * cols + j] = Enemy(x,y,e_pic)
     return enemies
@@ -48,48 +48,54 @@ def create_mystery(x_pos: float, y_pos: float, pik: str):
     return blitzer
 
 def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: int, cols: int, vx: float, vy: float, running: list): 
+    
+    margin = cons.w / 2
+
+    hit_wall = False
     #Made so that all enemies get animated at the same time
     #checks if edge has been reached on each enemy
-    for i in range(rows):
-        for j in range(cols):
-            enemy_1 = enemies_1[i * cols + j]
-            enemy_2 = enemies_2[i * cols + j]
-            enemy_3 = enemies_3[i * cols + j]
-
-            #condition that checks if wall reached
-            if (abs(enemy_1.x + vx) + cons.RADIUS > 3.0) or (abs(enemy_2.x + vx) + cons.RADIUS > 3.0) or (abs(enemy_3.x + vx) + cons.RADIUS > 3.0):
-                    
-                #changes the horizontal direction when edge reached
-                vx = -vx
-                
-                #moves all enemies one down if edge reached
-                for n in range(rows):
-                    for m in range(cols):
-                        enemies_1[n * cols + m].move(0,vy)
-                        enemies_2[n * cols + m].move(0,vy)
-                        enemies_3[n * cols + m].move(0,vy)
-                
-                #play sound
-                enemy_1.wall_hit()
+    for enemy_list in [enemies_1, enemies_2, enemies_3]:
+        for enemy in enemy_list:
             
-            #checks if the bottom was reached
-            if (abs(enemy_1.y + vy) + cons.RADIUS > 3.0) or (abs(enemy_2.y + vy) + cons.RADIUS > 3.0) or (abs(enemy_3.y + vy) + cons.RADIUS > 3.0):
+            #condition that checks if wall reached
+            if enemy.x + margin > gw.X_MAX or enemy.x - margin < gw.X_MIN:
+                hit_wall = True
+                break
+        if hit_wall:
+            break
+    
+    #changes the horizontal direction when edge reached
+    if hit_wall:
+        vx = -vx
+                
+        #moves all enemies one down if edge reached
+        for group in [enemies_1, enemies_2, enemies_3]:
+            for enemy in group:
+                enemy.move(0, vy)
+                                
+                #play sound
+        enemies_1[0].wall_hit()
+            
+    #checks if the bottom was reached
+    for enemy_list in [enemies_1, enemies_2, enemies_3]:
+        for enemy in enemy_list:
+            if (enemy.y + margin) < gw.Y_MIN:
                 running[0] = False
+                break
+        if not running[0]:
+            break
 
 
     #moves all the enemies horizontally based on direction in (vx)
-    for i in range(rows):
-        for j in range(cols):
-            enemies_1[i * cols + j].move(vx, 0)
-            enemies_2[i * cols + j].move(vx, 0)
-            enemies_3[i * cols + j].move(vx, 0)
+    for group in [enemies_1, enemies_2, enemies_3]:
+            for enemy in group:
+                enemy.move(vx, 0)
 
     #draws all the enemies according to the formating in class Enemy
-    for i in range(rows):
-        for j in range(cols):
-            enemies_1[i * cols + j].draw()
-            enemies_2[i * cols + j].draw()
-            enemies_3[i * cols + j].draw()
+    for group in [enemies_1, enemies_2, enemies_3]:
+            for enemy in group:
+                enemy.draw()
+
     #returns vx so the horizontal direction can be updated
     return vx
 
@@ -110,16 +116,16 @@ def game_over():
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
-    stddraw.setXscale(-3.0, 3.0)
-    stddraw.setYscale(-3.0, 3.0)
+    stddraw.setXscale(gw.X_MIN, gw.X_MAX)
+    stddraw.setYscale(gw.Y_MIN, gw.Y_MAX)
 
     stddraw.clear(stddraw.BLACK)
     
     #Creating the various enemies
-    mystery = create_mystery(2.8, 2.8, "enemy4.jpg")
-    enemies_1 = create_infantry(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 1.6, "enemy.jpg")
-    enemies_2 = create_infantry(cons.inf_rows2, cons.inf_cols2, cons.inf_d, 0.8, 0.8, "enemy2.jpg")
-    enemies_3 = create_infantry(cons.inf_rows3, cons.inf_cols3, cons.inf_d, 0.8, 0.0, "enemy3.jpg")
+    mystery = create_mystery(9, 9, "enemy4.jpg")
+    enemies_1 = create_infantry(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 5, 8, "enemy.jpg")
+    enemies_2 = create_infantry(cons.inf_rows2, cons.inf_cols2, cons.inf_d, 5, 6.5, "enemy2.jpg")
+    enemies_3 = create_infantry(cons.inf_rows3, cons.inf_cols3, cons.inf_d, 5, 5, "enemy3.jpg")
         
     stddraw.setPenColor(stddraw.WHITE)
     

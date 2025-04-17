@@ -12,7 +12,7 @@ inf_rows3 = 2
 inf_cols3 = 8
 
 #Spacing in between enemies
-inf_d = 0.35
+inf_d = 0.55
 
 #Speeds of enemies
 inf_vx = 0.025
@@ -21,8 +21,8 @@ t_vx = 0.05 #speed on title screen
 mvx = -0.0125
 
 #Size of enemies
-w = 0.3
-h = 0.3
-tw = 0.15 #starting width on title screen
-th = 0.15 #starting height on title screen
-RADIUS = 0.15 #wall check condition
+w = 0.5
+h = 0.5
+tw = 0.25 #starting width on title screen
+th = 0.25 #starting height on title screen
+RADIUS = 0.45 #wall check condition
