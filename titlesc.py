@@ -1,7 +1,6 @@
 import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio # type: ignore
-import enemies as en
 from picture import Picture
 import levellayout as lvl
 
@@ -107,13 +106,13 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
             enemy.draw_scaled(scale, lvl.tw, lvl.th)
         stddraw.show(10)
     #stddraw.picture(Picture("ingame.jpg"))
-    stddraw.show(5000)
+    stddraw.show(2000)
 
 def showtitle_sc():
 
     #image1 = Picture("starry1.jpg")
     #image2 = Picture("starry2.jpg")
-    image3 = Picture("starry3.jpg")
+    #image3 = Picture("starry3.jpg")
     #image4 = Picture("Portal.jpg")
     #frames = [image1, image2, image3]
     #frame_index = 0
