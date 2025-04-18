@@ -32,7 +32,7 @@ class Enemy:
       threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
 
 
-def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[Enemy]:
+def create_form1(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[Enemy]:
     d = distance
     enemies = stdarray.create1D(rows * cols, None) 
     #intialized all enemies to (None)
@@ -41,6 +41,25 @@ def create_infantry(rows: int, cols: int, distance, x_pos: float, y_pos: float, 
             x = x_pos + j*d
             y = y_pos - i*d
             enemies[i * cols + j] = Enemy(x,y,e_pic)
+    return enemies
+
+def create_form2(rows: int, cols: int, x_start: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
+    
+    d = spacing
+    enemies: list[Enemy] = [] 
+
+    for i in range(rows):
+        en_row = cols - (2 * i)
+        if (en_row <= 0):
+            break
+        total_width = (en_row - 1) * d
+        start_x = x_start + ((cols - en_row) / 2) * d
+
+        for j in range(en_row):
+            x = start_x + j * d
+            y = y_start - i * d
+            enemies.append(Enemy(x, y, e_pic))
+    
     return enemies
 
 def create_mystery(x_pos: float, y_pos: float, pik: str):
@@ -105,11 +124,44 @@ def animate_mystery(mystery: Enemy, vx: float):
     mystery.move(vx, 0)
     mystery.draw()
 
+def animate_form2(enemies, vx: float, vy: float, running: bool) -> float:
+    
+    margin = cons.w / 2
+
+    hit_wall = False
+
+    for enemy in enemies:
+
+        if (enemy.x + margin) > gw.X_MAX or (enemy.x - margin) < gw.X_MIN:
+            hit_wall = True
+            break
+
+    for enemy in enemies:
+        if (enemy is not None) and (enemy.y - margin) < gw.Y_MIN:
+            running[0] = False
+
+    if hit_wall:
+        vx = -vx
+
+        for enemy in enemies:
+            enemy.move(0, vy)
+
+        enemies[0].wall_hit()
+
+    for enemy in enemies:
+        enemy.move(vx, 0)
+
+    for enemy in enemies:
+        enemy.draw()
+
+    return vx
+
+
 def game_over():
     stddraw.clear(stddraw.BLACK)
     stddraw.setPenColor(stddraw.WHITE)
     stddraw.setFontSize(50)
-    stddraw.text(0.0, 0.5, "GAME OVER")
+    stddraw.text(5, 5, "GAME OVER")
     stddraw.show()
     stddraw.pause(10000)
 
@@ -122,11 +174,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     stddraw.clear(stddraw.BLACK)
     
     #Creating the various enemies
-    mystery = create_mystery(9, 9, "enemy4.jpg")
-    enemies_1 = create_infantry(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 5, 8, "enemy.jpg")
-    enemies_2 = create_infantry(cons.inf_rows2, cons.inf_cols2, cons.inf_d, 5, 6.5, "enemy2.jpg")
-    enemies_3 = create_infantry(cons.inf_rows3, cons.inf_cols3, cons.inf_d, 5, 5, "enemy3.jpg")
-        
+    mystery = create_mystery(9, 9, "mystery.jpg")
+    enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
+            
     stddraw.setPenColor(stddraw.WHITE)
     
     #vx has to be defined in main in order for the direction to be updated
@@ -142,7 +192,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
-        vx = animate_enemies(enemies_1, enemies_2, enemies_3, cons.inf_rows1, cons.inf_cols1, vx, cons.inf_vy, running)
+        vx = animate_form2(enemies, vx, cons.inf_vy, running)
         
         animate_mystery(mystery, cons.mvx)
             
