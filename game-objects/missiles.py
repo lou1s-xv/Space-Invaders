@@ -48,6 +48,7 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
                 if (abs(missiles[i].x - enemies[k].x) < en.ENEMY_SIZE) and (abs(missiles[i].y - enemies[k].y) < en.ENEMY_SIZE):
                     enemies.pop(k)
                     missiles.pop(i)
+                    stddraw.playFile("explosion.wav")
                     break
     
 # TODO: make module tests
