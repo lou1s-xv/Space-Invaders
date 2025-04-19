@@ -32,35 +32,88 @@ class Enemy:
       threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
 
 
-def create_form1(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str) -> list[Enemy]:
+def create_form1(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic: str) -> list[Enemy]:
+    
+    #creating a infantry ranks formation
     d = distance
-    enemies = stdarray.create1D(rows * cols, None) 
+    enemies: list[Enemy] = [] 
     #intialized all enemies to (None)
     for i in range(rows):
         for j in range(cols):
-            x = x_pos + j*d
-            y = y_pos - i*d
-            enemies[i * cols + j] = Enemy(x,y,e_pic)
+            x = x_start + j*d
+            y = y_start - i*d
+            enemies.append(Enemy(x,y,e_pic))
     return enemies
 
 def create_form2(rows: int, cols: int, x_start: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
     
+    #creating a pyramid formation
     d = spacing
     enemies: list[Enemy] = [] 
-
+    
+    
     for i in range(rows):
         en_row = cols - (2 * i)
         if (en_row <= 0):
             break
-        total_width = (en_row - 1) * d
         start_x = x_start + ((cols - en_row) / 2) * d
 
         for j in range(en_row):
             x = start_x + j * d
             y = y_start - i * d
+            print(f"Enemy at row {i}, index {j}, pos ({x:.2f}, {y:.2f})")             
             enemies.append(Enemy(x, y, e_pic))
     
     return enemies
+
+def create_form3(x_cen: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
+
+    #creating a diamond formation
+    pattern = [1, 3, 5, 3, 1]  # enemies per row
+    enemies: list[Enemy] = []
+    
+    #top grouping
+    for i, count in enumerate(pattern):
+        total_width = (count - 1) * spacing
+        start_x = x_cen - total_width / 2
+        y = y_start - i * spacing
+
+        for j in range(count):
+            x = start_x + j * spacing
+            enemies.append(Enemy(x, y, e_pic))
+    
+    #middle right group
+    for i, count in enumerate(pattern):
+        total_width = (count - 1) * spacing
+        start_x = (x_cen + 2) - total_width / 2
+        y = (y_start - 2) - i * spacing
+
+        for j in range(count):
+            x = start_x + j * spacing
+            enemies.append(Enemy(x, y, e_pic))
+
+    #middle left grouping
+    for i, count in enumerate(pattern):
+        total_width = (count - 1) * spacing
+        start_x = (x_cen - 2) - total_width / 2
+        y = (y_start - 2) - i * spacing
+
+        for j in range(count):
+            x = start_x + j * spacing
+            enemies.append(Enemy(x, y, e_pic))
+
+    #bottom grouping
+    for i, count in enumerate(pattern):
+        total_width = (count - 1) * spacing
+        start_x = x_cen - total_width / 2
+        y = (y_start - 4) - i * spacing
+
+        for j in range(count):
+            x = start_x + j * spacing
+            enemies.append(Enemy(x, y, e_pic))
+   
+
+    return enemies  
 
 def create_mystery(x_pos: float, y_pos: float, pik: str):
     blitzer = Enemy(x_pos, y_pos, pik)
@@ -156,6 +209,37 @@ def animate_form2(enemies, vx: float, vy: float, running: bool) -> float:
 
     return vx
 
+def animate_form3(enemies, vx: float, vy: float, running: bool):
+
+    margin = cons.w/2
+
+    hit_wall = False
+
+    for enemy in enemies:
+        if (enemy.x + margin) > gw.X_MAX or (enemy.x - margin) < gw.X_MIN:
+            hit_wall = True
+            break
+
+    for enemy in enemies:
+        if (enemy.y - margin) < gw.Y_MIN:
+            running[0] = False
+
+    if hit_wall:
+        
+        vx = -vx
+
+        for enemy in enemies:
+            enemy.move(0, vy)
+        enemies[0].wall_hit()
+
+    for enemy in enemies:
+        enemy.move(vx, 0)
+
+    for enemy in enemies:
+        enemy.draw()
+
+    return vx
+
 
 def game_over():
     stddraw.clear(stddraw.BLACK)
@@ -175,8 +259,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     
     #Creating the various enemies
     mystery = create_mystery(9, 9, "mystery.jpg")
-    enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
-            
+    #enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
+    enemies = create_form3(5, 8, 0.55, "enemydiamond.png")
+
     stddraw.setPenColor(stddraw.WHITE)
     
     #vx has to be defined in main in order for the direction to be updated
@@ -192,7 +277,10 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
-        vx = animate_form2(enemies, vx, cons.inf_vy, running)
+        
+        #vx = animate_form2(enemies, vx, cons.inf_vy, running)
+        
+        vx = animate_form3(enemies, vx, cons.inf_vy, running)
         
         animate_mystery(mystery, cons.mvx)
             
