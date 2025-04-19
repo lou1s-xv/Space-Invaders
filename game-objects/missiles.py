@@ -50,7 +50,21 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
                     missiles.pop(i)
                     stddraw.playFile("explosion.wav")
                     break
-    
+
+def player_damage(missiles, shooter):
+    for i in range(len(missiles)):
+        if missiles[i].x < gw.X_MIN or missiles[i].x > gw.X_MAX or missiles[i].y < gw.Y_MIN or missiles[i].y > gw.Y_MAX:
+            missiles.pop(i) 
+        else:
+            for k in range(env.BUNKER_NR):
+                if gw.X_MIN + (env.BUNKERWIDTH * (2 * k + 1)) < missiles[i].x < gw.X_MIN + (env.BUNKERWIDTH * (2 * (k + 1))) and gw.Y_MIN + env.BUNKER_DIST < missiles[i].y < gw.Y_MIN + env.BUNKER_DIST + env.BUNKER_THICKNESS:
+                    missiles.pop[i]
+                    break
+            if math.sqrt((missiles[i].x - shooter.x) ** 2 - (missiles[i].y - env.SHOOTER_DIST) ** 2) <= shooter.SHOOTER_SIZE:
+                missiles.pop(i)
+                shooter.health -= 1
+                stddraw.playFile("explosion.wav")
+                break
 # TODO: make module tests
 
 def main():
