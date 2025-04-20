@@ -4,10 +4,9 @@ import stdio, stdrandom, stddraw, stdaudio, stdarray
 import env, shooter
 import enemies as en
 import gamewindow as gw
+import constants as con
 
 # X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py
-
-# ENEMY_SIZE -> enemies.py ???
 
 # constants
 MISSILE_SIZE = 0.02
@@ -45,7 +44,7 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
                     missiles.pop[i]
                     break
             for k in range(len(enemies)):
-                if (abs(missiles[i].x - enemies[k].x) < en.ENEMY_SIZE) and (abs(missiles[i].y - enemies[k].y) < en.ENEMY_SIZE):
+                if math.sqrt((missiles[i].x - enemies[k].x) ** 2 + (missiles[i].y - enemies[k].y) ** 2) < con.ENEMEY_SIZE / 2:
                     enemies.pop(k)
                     missiles.pop(i)
                     stddraw.playFile("explosion.wav")
