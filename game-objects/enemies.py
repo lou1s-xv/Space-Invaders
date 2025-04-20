@@ -32,17 +32,32 @@ class Enemy:
       threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
 
 
-def create_form1(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic: str) -> list[Enemy]:
+def create_form1(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic1: str, e_pic2: str, e_pic3: str) -> list[Enemy]:
     
     #creating a infantry ranks formation
     d = distance
     enemies: list[Enemy] = [] 
     #intialized all enemies to (None)
+    #Top rank
     for i in range(rows):
         for j in range(cols):
             x = x_start + j*d
             y = y_start - i*d
-            enemies.append(Enemy(x,y,e_pic))
+            enemies.append(Enemy(x,y,e_pic1))
+    #middle rank
+    for i in range(rows):
+        for j in range(cols):
+            x = x_start + j*d
+            y = (y_start - 1.5) - i*d
+            enemies.append(Enemy(x,y,e_pic2))
+    #bottom rank
+    for i in range(rows):
+        for j in range(cols):
+            x = x_start + j*d
+            y = (y_start - 3.0) - i*d
+            enemies.append(Enemy(x,y,e_pic3))
+
+
     return enemies
 
 def create_form2(rows: int, cols: int, x_start: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
