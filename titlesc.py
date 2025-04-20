@@ -97,7 +97,6 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
             enemy.move(step_size * dx / length, step_size * dy / length)
 
             stddraw.clear(stddraw.BLACK)
-            #stddraw.picture(Picture("Portal.jpg"))
             for e in enemies:
                 e.draw(cons.tw, cons.th)
             stddraw.show(0.025)
@@ -112,7 +111,6 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
         for enemy in enemies:
             enemy.draw_scaled(scale, cons.tw, cons.th)
         stddraw.show(10)
-    #stddraw.picture(Picture("ingame.jpg"))
     stddraw.show(2000)
 
 def showtitle_sc():
@@ -120,26 +118,26 @@ def showtitle_sc():
     #image1 = Picture("starry1.jpg")
     #image2 = Picture("starry2.jpg")
     #image3 = Picture("starry3.jpg")
-    #image4 = Picture("Portal.jpg")
+    image4 = Picture("Portal.png")
     #frames = [image1, image2, image3]
     #frame_index = 0
 
-    enemies1 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 5, 9, "enemy.jpg")
-    #enemies2 = bgen(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 0.8, 1.6, "enemy2.jpg")
+    enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "enemy.png")
+    #enemies2 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 0.8, 1.6, "enemy2.jpg")
     vx = cons.t_vx 
 
     stddraw.setPenColor(stddraw.WHITE)
     while True:
         stddraw.clear(stddraw.BLACK)
-        #stddraw.picture(image3)
+        stddraw.picture(image4, 4.5, 5, 15, 10)
 
-        vx = mbgen(enemies1, cons.inf_rows1, cons.inf_cols1, vx, 0)
-        #vx = mbgen(enemies2, cons.inf_rows1, cons.inf_cols1, vx, 0)
+        vx = mbgen(enemies1, cons.l1_rows, cons.l1_cols, vx, 0)
+        #vx = mbgen(enemies2, cons.l1_rows, cons.l1_cols, vx, 0)
 
         # Draw title text on top (unchanging)
         #stddraw.setFontSize(40)
         #stddraw.text(0, 2, "SPACE INVADERS")
-        stddraw.picture(Picture("Title.png"))
+        stddraw.picture(Picture("Title.png"), 5, 5, 3, 3)
         stddraw.setFontSize(20)
         stddraw.text(5, 2, "Press SPACE to start...")
         stddraw.show(100)
@@ -151,8 +149,8 @@ def showtitle_sc():
             if key == ' ':
                 break
     
-    zoomcen(enemies1, cons.inf_rows1, cons.inf_cols1, 0.01, 5, 8)
-    #zoomcen(enemies2, cons.inf_rows1, cons.inf_cols1, 0.01, -0.8, 0.8)
+    zoomcen(enemies1, cons.l1_rows, cons.l1_cols, 0.01, 5, 8)
+    #zoomcen(enemies2, cons.l1_rows, cons.l1_cols, 0.01, -0.8, 0.8)
 
     stddraw.clear(stddraw.BLACK)
     stddraw.show(cons.DT)
