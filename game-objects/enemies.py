@@ -81,10 +81,9 @@ def create_form2(rows: int, cols: int, x_start: float, y_start: float, spacing: 
     
     return enemies
 
-def create_form3(x_cen: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
+def create_form3(pattern: list[int], x_cen: float, y_start: float, spacing: float, e_pic: str)-> list[Enemy]:
 
     #creating a diamond formation
-    pattern = [1, 3, 5, 3, 1]  # enemies per row
     enemies: list[Enemy] = []
     
     #top grouping
@@ -130,11 +129,11 @@ def create_form3(x_cen: float, y_start: float, spacing: float, e_pic: str)-> lis
 
     return enemies 
 
-def create_form4(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic: str)-> list[Enemy]:
+def create_form4(rows: int, cols: int, x_start: float, y_start: float, e_pic: str)-> list[Enemy]:
 
     #checkerboard pattern
     enemies = []
-    distance = 2
+    d = 0.55
     
     for i in range(rows):
         for j in range(cols):
@@ -149,97 +148,13 @@ def create_mystery(x_pos: float, y_pos: float, pik: str):
     blitzer = Enemy(x_pos, y_pos, pik)
     return blitzer
 
-def animate_enemies(enemies_1: Enemy,enemies_2: Enemy, enemies_3: Enemy, rows: int, cols: int, vx: float, vy: float, running: list): 
-    
-    margin = cons.w / 2
-
-    hit_wall = False
-    #Made so that all enemies get animated at the same time
-    #checks if edge has been reached on each enemy
-    for enemy_list in [enemies_1, enemies_2, enemies_3]:
-        for enemy in enemy_list:
-            
-            #condition that checks if wall reached
-            if enemy.x + margin > gw.X_MAX or enemy.x - margin < gw.X_MIN:
-                hit_wall = True
-                break
-        if hit_wall:
-            break
-    
-    #changes the horizontal direction when edge reached
-    if hit_wall:
-        vx = -vx
-                
-        #moves all enemies one down if edge reached
-        for group in [enemies_1, enemies_2, enemies_3]:
-            for enemy in group:
-                enemy.move(0, vy)
-                                
-                #play sound
-        enemies_1[0].wall_hit()
-            
-    #checks if the bottom was reached
-    for enemy_list in [enemies_1, enemies_2, enemies_3]:
-        for enemy in enemy_list:
-            if (enemy.y + margin) < gw.Y_MIN:
-                running[0] = False
-                break
-        if not running[0]:
-            break
-
-
-    #moves all the enemies horizontally based on direction in (vx)
-    for group in [enemies_1, enemies_2, enemies_3]:
-            for enemy in group:
-                enemy.move(vx, 0)
-
-    #draws all the enemies according to the formating in class Enemy
-    for group in [enemies_1, enemies_2, enemies_3]:
-            for enemy in group:
-                enemy.draw()
-
-    #returns vx so the horizontal direction can be updated
-    return vx
-
 def animate_mystery(mystery: Enemy, vx: float):
     
     #Draws and moves the mystery enemy 
     mystery.move(vx, 0)
     mystery.draw()
 
-def animate_form2(enemies, vx: float, vy: float, running: bool) -> float:
-    
-    margin = cons.w / 2
-
-    hit_wall = False
-
-    for enemy in enemies:
-
-        if (enemy.x + margin) > gw.X_MAX or (enemy.x - margin) < gw.X_MIN:
-            hit_wall = True
-            break
-
-    for enemy in enemies:
-        if (enemy is not None) and (enemy.y - margin) < gw.Y_MIN:
-            running[0] = False
-
-    if hit_wall:
-        vx = -vx
-
-        for enemy in enemies:
-            enemy.move(0, vy)
-
-        enemies[0].wall_hit()
-
-    for enemy in enemies:
-        enemy.move(vx, 0)
-
-    for enemy in enemies:
-        enemy.draw()
-
-    return vx
-
-def animate_form3(enemies, vx: float, vy: float, running: bool):
+def animate_forms(enemies, vx: float, vy: float, running: bool):
 
     margin = cons.w/2
 
@@ -288,14 +203,16 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     stddraw.clear(stddraw.BLACK)
     
     #Creating the various enemies
-    mystery = create_mystery(9, 9, "mystery.jpg")
-    #enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
-    enemies = create_form3(5, 8, 0.55, "enemydiamond.png")
+    mystery = create_mystery(9, 9, "mystery.png")
+    #enemies1 = create_form1(cons.l1_rows, cons.l2_cols, cons.l1_spacing, cons.l1_xstart, cons.l1_ystart, "enemy.png", "enemy2.png", "enemy3.png")
+    #enemies2 = create_form2(cons.l2_rows, cons.l2_cols, cons.l2_xstart, cons.l2_ystart, cons.l2_spacing, "enemypym.png")
+    enemies3 = create_form3(cons.l3_pattern, cons.l3_xcen, cons.l3_ystart, cons.l3_spacing, "enemydiamond.png")
+    #enemies4 = create_form4(cons.l4_rows, cons.l4_cols, cons.l4_xstart, cons.l4_ystart, "enemypym.png")
 
     stddraw.setPenColor(stddraw.WHITE)
     
     #vx has to be defined in main in order for the direction to be updated
-    vx = cons.inf_vx
+    vx = cons.gen_vx
     
     #Game over check variable
     running: list[bool] = [True]
@@ -308,9 +225,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
         
-        #vx = animate_form2(enemies, vx, cons.inf_vy, running)
+        #vx = animate_form2(enemies, vx, cons.gen_vy, running)
         
-        vx = animate_form3(enemies, vx, cons.inf_vy, running)
+        vx = animate_forms(enemies3, vx, cons.gen_vy, running)
         
         animate_mystery(mystery, cons.mvx)
             
