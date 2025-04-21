@@ -10,8 +10,7 @@ tw = 0.25 #starting width on title screen
 th = 0.25 #starting height on title screen
 
 #Enemy constants
-w = 0.5
-h = 0.5
+ENEMY_SIZE = 0.5
 gen_vx = 0.025
 gen_vy = -0.10
 mvx = -0.025
@@ -23,7 +22,7 @@ l1_cols = 8
 l1_spacing = 0.55
 l1_vx = 0.025
 l1_vy = -0.10
-l1_xstart = 5
+l1_xstart = 2
 l1_ystart = 8
 
 #Level 2 constants for enemies
