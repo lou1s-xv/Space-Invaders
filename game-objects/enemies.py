@@ -5,6 +5,7 @@ import gamewindow as gw
 import threading
 from picture import Picture
 import constants as cons
+from missiles import Missile
 
  # Controls the speed
 VX = 0.025
@@ -30,7 +31,7 @@ class Enemy:
     
     #Draws the enemy based on image
     def draw(self):
-        stddraw.picture(self.image, self.x, self.y, cons.w, cons.h)
+        stddraw.picture(self.image, self.x, self.y, cons.ENEMY_SIZE, cons.ENEMY_SIZE)
     
     #wall hit sound
     def wall_hit(self):
@@ -191,15 +192,23 @@ def create_mystery(x_pos: float, y_pos: float, pik: str):
     blitzer = Enemy(x_pos, y_pos, pik)
     return blitzer
 
+def maybe_fire_missile(enemies, en_missiles):
+    for enemy in enemies:
+        if stdrandom.uniformFloat(0, 1) < 0.001:
+            missile = Missile(enemy.x, enemy.y - 0.02, -180)
+            en_missiles.append(missile)
+
+
+
 def animate_mystery(mystery: Enemy, vx: float):
     
     #Draws and moves the mystery enemy 
     mystery.move(vx, 0)
     mystery.draw()
 
-def animate_forms(enemies, vx: float, vy: float, running: bool):
+def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, vy: float, running: bool):
 
-    margin = cons.w/2
+    margin = cons.ENEMY_SIZE/2
 
     hit_wall = False
 
@@ -219,6 +228,9 @@ def animate_forms(enemies, vx: float, vy: float, running: bool):
         for enemy in enemies:
             enemy.move(0, vy)
         enemies[0].wall_hit()
+
+   #add function for enemy missiles
+    maybe_fire_missiles(enemies, en_missiles)
 
     for enemy in enemies:
         enemy.move(vx, 0)
@@ -247,11 +259,13 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     
     #Creating the various enemies
     mystery = create_mystery(9, 9, "mystery.png")
-    #enemies1 = create_form1(cons.l1_rows, cons.l2_cols, cons.l1_spacing, cons.l1_xstart, cons.l1_ystart, "enemy.png", "enemy2.png", "enemy3.png")
+    enemies1 = create_form1(cons.l1_rows, cons.l1_cols, cons.l1_spacing, cons.l1_xstart, cons.l1_ystart, "enemy.png", "enemy2.png", "enemy3.png")
     #enemies2 = create_form2(cons.l2_rows, cons.l2_cols, cons.l2_xstart, cons.l2_ystart, cons.l2_spacing, "enemypym.png")
-    enemies3 = create_form3(cons.l3_pattern, cons.l3_xcen, cons.l3_ystart, cons.l3_spacing, "enemydiamond.png")
+    #enemies3 = create_form3(cons.l3_pattern, cons.l3_xcen, cons.l3_ystart, cons.l3_spacing, "enemydiamond.png")
     #enemies4 = create_form4(cons.l4_rows, cons.l4_cols, cons.l4_xstart, cons.l4_ystart, "enemypym.png")
-
+    
+    en_missiles = []
+    
     stddraw.setPenColor(stddraw.WHITE)
     
     #vx has to be defined in main in order for the direction to be updated
@@ -270,7 +284,10 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         
         #vx = animate_form2(enemies, vx, cons.gen_vy, running)
         
-        vx = animate_forms(enemies3, vx, cons.gen_vy, running)
+        vx = animate_forms(enemies1, missile_list, vx, cons.gen_vy, running)
+        
+        for mis in en_missiles:
+            mis.update_pos(30)
         
         animate_mystery(mystery, cons.mvx)
             
