@@ -282,7 +282,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         #Used a function to create the enemies
         #have to say vx equals the function so vx can be updated and the proper direction can be maintained
         
-        #vx = animate_form2(enemies, vx, cons.gen_vy, running)
+        gw.draw_score() 
         
         vx = animate_forms(enemies1, missile_list, vx, cons.gen_vy, running)
         
