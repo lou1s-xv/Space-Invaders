@@ -44,7 +44,7 @@ def bgen(rows: int, cols: int, distance, x_pos: float, y_pos: float, e_pic: str)
 
 def mbgen(enemies, rows: int, cols: int, vx: float, vy: float):
     
-    margin = cons.w/2
+    margin = cons.ENEMY_SIZE/2
 
     hit_wall = False
 
