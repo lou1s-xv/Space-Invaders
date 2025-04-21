@@ -28,7 +28,7 @@ class SHOOTER:
         # main loop
         while True:
             stddraw.clear()
-            stddraw.picture(image.path,pos_x,pos_y) 
+            stddraw.picture(image_path,pos_x,pos_y) 
             
             if stddraw.hasNextKeyTyped():
                 key = stddraw.nextKeyTyped()
