@@ -25,7 +25,7 @@ class Missile:
         self.y = pos_y
         self.ang = ang
 
-    def update_pos(self, FPS): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
+    def update_pos(self): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
         self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
         self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
 
