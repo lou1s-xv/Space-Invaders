@@ -43,7 +43,7 @@ class Shooter:
         health_color = stddraw.GREEN
 
         if shooter.health < 50:
-            health_color = YELLOw
+            health_color = stddraw.YELLOW
         elif shooter.health < 20:
             health_color = stddraw.RED
             
