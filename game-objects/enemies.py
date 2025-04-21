@@ -6,6 +6,11 @@ import threading
 from picture import Picture
 import constants as cons
 
+ # Controls the speed
+VX = 0.025
+VY = -0.1
+MYSTERY_VX = -0.0125
+BOSS_MAX_HEALTH = 15
 
 class Enemy:
     x: float
@@ -31,6 +36,11 @@ class Enemy:
     def wall_hit(self):
       threading.Thread(target=stdaudio.playFile, args=("beep",)).start()
 
+class Boss(Enemy):
+
+    def __init__(self, x, y, str):
+        super().__init__(x, y, pic) #inherit all methods
+        self.health = BOSS_MAX_HEALTH
 
 def create_form1(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic1: str, e_pic2: str, e_pic3: str) -> list[Enemy]:
     
@@ -143,6 +153,39 @@ def create_form4(rows: int, cols: int, x_start: float, y_start: float, e_pic: st
                 enemies.append(Enemy(x,y,e_pic))
     
     return enemies
+
+def create_boss(x, y, e_pic):
+
+    enemies = []
+    enemies.append(Boss(x, y, e_pic))
+
+def load_level(level_num: int):
+    """Creates enemies based on level number."""
+    if level_num == 1:
+        return enemies.create_form4(4, 8, 1.0, 9.0, cons.e_pic1)
+    elif level_num == 2:
+        return enemies.create_form1(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
+    elif level_num == 3:
+        return enemies.create_form2(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
+    elif level_num == 4:
+        pattern = [3, 4, 5]
+        return enemies.create_form3(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
+    else:
+        return []
+
+def run_level(level_num: int):
+    enemies_list = load_level(level_num)
+    running = [True]
+    vx = VX
+
+    while running[0]:
+        stddraw.clear(stddraw.BLACK)
+        vx = enemies.animate_forms(enemies_list, vx, VY, running)
+        stddraw.show(1000 // gw.FPS)
+
+    level_num += 1
+
+    return level_num
 
 def create_mystery(x_pos: float, y_pos: float, pik: str):
     blitzer = Enemy(x_pos, y_pos, pik)
