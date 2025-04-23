@@ -22,6 +22,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     v_x = cons.gen_vx
     while True:
         enemies = en.load_level(lvl_num)
+        mystery = en.createmystery(9, 6, "mystery.png")#chose y = 6 as the starting point but could be anywhere
         while len(enemies) != 0:
             gw.clear_window()
             v_x = animate_form(enemies)

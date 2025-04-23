@@ -15,6 +15,8 @@ VY = -0.1
 MYSTERY_VX = -0.0125
 BOSS_MAX_HEALTH = 15
 
+frame = 0
+
 class Enemy:
     x: float
     y: float
@@ -165,19 +167,19 @@ def create_boss(x, y, e_pic):
 def load_level(level_num: int):
     #Creates enemies based on level number.
     if level_num == 1:
-        return create_form1(4, 8, 1.0, 9.0, cons.e_pic1)
+        return create_form1(2, 6, 0.7, 1.0, 9.0, "enemy.png", "enemy2.png", "enemy3.png")
     elif level_num == 2:
-        return create_form2(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
+        return create_form4(4, 8, 1.0, 9.0, "enemycheck.png")
     elif level_num == 3:
-        return create_form3(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
+        return create_form2(7, 14, 0.5, 9.0, 0.7, "enemypym.png")
     elif level_num == 4:
         pattern = cons.l3_pattern
-        return create_form4(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
+        return create_form3(pattern, 5.0, 9.0, 0.65, "enemydiamond.png")
     else:
         return []
 
 def create_mystery(x_pos: float, y_pos: float, pik: str):
-    blitzer = Enemy(x_pos, y_pos, pik)
+    blitzer = [Enemy(x_pos, y_pos, pik)]
     return blitzer
 
 def maybe_fire_missile(enemies, en_missiles):
@@ -190,9 +192,18 @@ def maybe_fire_missile(enemies, en_missiles):
 
 def animate_mystery(mystery: Enemy, vx: float):
     
-    #Draws and moves the mystery enemy 
-    mystery.move(vx, 0)
-    mystery.draw()
+    #Draws and moves the mystery enemy
+    global frame
+
+    if len(mystery) == 0:
+        return
+    vy = 0.2 * math.sin(0.1*frame)
+    mystery[0].move(vx, vy)
+    mystery[0].draw()
+    frame += 1
+
+    if mystery[0].x < gw.X_MIN:
+        mystery.pop()
 
 def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, vy: float):
 
