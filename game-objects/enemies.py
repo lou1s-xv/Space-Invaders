@@ -163,7 +163,7 @@ def create_boss(x, y, e_pic):
     enemies.append(Boss(x, y, e_pic))
 
 def load_level(level_num: int):
-    """Creates enemies based on level number."""
+    #Creates enemies based on level number.
     if level_num == 1:
         return create_form1(4, 8, 1.0, 9.0, cons.e_pic1)
     elif level_num == 2:
