@@ -13,6 +13,7 @@ MISSILE_SIZE = 0.02
 MISSILE_COLOR = stddraw.RED
 MISSILE_VELOCITY = 1 # this can be experimented with (in units/s)
 PI = math.pi
+ENEMY_POINT_VALUE = 10
 
 class Missile:
 
@@ -48,6 +49,7 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
                     enemies.pop(k)
                     missiles.pop(i)
                     stddraw.playFile("explosion.wav")
+                    gw.add_points(ENEMY_POINT_VALUE)
                     break
 
 def player_damage(missiles, shooter):
