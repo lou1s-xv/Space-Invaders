@@ -23,10 +23,10 @@ def main() -> None:  # Need the return type for mypy to type-check the body
             gw.clear_window()
             v_x = animate_form(enemies)
             shooter.update_pos(missiles)
-            for i in len(missiles):
-                missiles[i].update()
-            for i in len(en_missiles):
-                en_missiles[i].update()
+            for mis in missiles:
+                mis.update()
+            for mis in en_missiles):
+                mis.update()
             ms.detect_collisions(missiles, enemies)
             ms.player_damage(en_missiles, shooter)
             gw.show_window()
