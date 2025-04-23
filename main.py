@@ -20,8 +20,9 @@ def main() -> None:  # Need the return type for mypy to type-check the body
     while True:
         enemies = en.load_level(lvl_num)
         while len(enemies) != 0:
+            gw.clear_window()
             v_x = animate_form(enemies)
-            shooter.update_pos()
+            shooter.update_pos(missiles)
             for i in len(missiles):
                 missiles[i].update()
             for i in len(en_missiles):
