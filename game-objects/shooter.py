@@ -3,17 +3,17 @@ import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 import gamewindow as gw
 from picture import Picture
+from missiles import Missile
 
 SHOOTER_SIZE = 0.5
 SHOOTER_SPEED = 0.2
 
+
 class Shooter:
-    def __init__(self, pos_x, pos_y):
+    def __init__(self, pos_x, pos_y, shooter_angle):
         self.x = pos_x
         self.y = pos_y
-        self.size = SHOOTER_SIZE
-        self.speed = SHOOTER_SPEED
-        self.color = stddraw.RED
+        self.theta = shooter_angle
         self.health = 3
 
     def draw(self):
@@ -53,13 +53,14 @@ class Shooter:
         shooter.x = max(shooter.size / 2, min(gw.X_MAX - shooter.size / 2, shooter.x))
         shooter.y = max(shooter.size / 2, min(gw.Y_MAX - shooter.size / 2, shooter.y))
         
-        # inclue aiming code
+        # inclue aiming code (missiles)
+        #space bar control shooting
+        # zero degree is initial angle, bounded between -90 and 90
+        # function for rotating the shooter, and function for shooting.
 
 
 def main():
     pass
-
-        shooter.draw()
       
 if __name__ == "__main__":
     main()
