@@ -1,7 +1,7 @@
 import sys
 import math
 import stdio, stdrandom, stddraw, stdaudio, stdarray
-import env, shooter
+import env
 import enemies as en
 import gamewindow as gw
 import constants as con
@@ -13,8 +13,6 @@ MISSILE_SIZE = 0.02
 MISSILE_COLOR = stddraw.RED
 MISSILE_VELOCITY = 1 # this can be experimented with (in units/s)
 PI = math.pi
-ENEMY_POINT_VALUE = 10
-MISSILE_STR = "missile.jpg"
 
 class Missile:
 
@@ -27,14 +25,14 @@ class Missile:
         self.y = pos_y
         self.ang = ang
 
-    def draw_missile(self):
-        pic = Picture(MISSILE_STR)
-        stddraw.picture(pic, self.x, self.y, MISSILE_SIZE, MISSILE_SIZE)
-
     def update_pos(self): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
         self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
         self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
-        self.draw_missile()
+
+    def draw_missile(self):
+        stddraw.setPenColor(MISSILE_COLOR)
+        stddraw.filledCircle(self.x, self.y, MISSILE_SIZE)
+
 
 def detect_collision(missiles, enemies): # destroys missiles and enemies in collisions, as well as out of bounds missiles
     for i in range(len(missiles)):
@@ -50,7 +48,6 @@ def detect_collision(missiles, enemies): # destroys missiles and enemies in coll
                     enemies.pop(k)
                     missiles.pop(i)
                     stddraw.playFile("explosion.wav")
-                    gw.add_points(ENEMY_POINT_VALUE)
                     break
 
 def player_damage(missiles, shooter):
@@ -64,8 +61,8 @@ def player_damage(missiles, shooter):
                     break
             if math.sqrt((missiles[i].x - shooter.x) ** 2 + (missiles[i].y - shooter.SHOOTER_DIST) ** 2) <= shooter.SHOOTER_SIZE:
                 missiles.pop(i)
+                shooter.health -= 1
                 stddraw.playFile("explosion.wav")
-                shooter.damage()
                 break
 # TODO: make module tests
 

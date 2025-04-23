@@ -3,57 +3,75 @@ import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
 import gamewindow as gw
 from picture import Picture
-from missiles import Missile
 
 SHOOTER_SIZE = 0.5
 SHOOTER_SPEED = 0.2
 
+AIM_ANGLE = math.pi / 2
+ANGLE_STEP = math.pi / 90
+
+LEFT = False
+RIGHT = False
 
 class Shooter:
     def __init__(self, pos_x, pos_y, shooter_angle):
         self.x = pos_x
         self.y = pos_y
-        self.theta = shooter_angle
+        self.angle = shooter_angle
         self.health = 3
+        self.image = Picture("shooter.jpg")
+        self.speed = SHOOTER_SPEED
 
     def draw(self):
         # Draw the shooter image
-        image_path = 'shooter.JPG'  
-        stddraw.picture(image_path, self.x, self.y)
+        rotate_shooter(self, self.angle)
+        stddraw.picture(self.image, self.x, self.y)
 
         # Draw lives
         # import pictures for hearts(drawn in gamewindow)
-        bar_x = 0.1
-        bar_y = 0.02
-        width = self.x - bar_x / 2
-        height = self.y + self.size + 0.05
-
-
-        # Health bar border
-        stddraw.setPenColor(stddraw.BLACK)
-        stddraw.rectangle(width, height, bar_x, bar_y)
+       
 
     def damage(self):
         self.health = self.health - 1
-            if self.health == 0:
-                gameover()
+        if self.health == 0:
+            gameover()
                 
-    def update_pos(self,missiles):
+    def update_pos(self):
         if stddraw.hasNextKeyTyped():
             key = stddraw.nextKeyTyped()
             if key == stddraw.KEY_LEFT:
                 shooter.x -= shooter.speed
             if key == stddraw.KEY_RIGHT:
                 shooter.x += shooter.speed
-                
-        self.draw()
-            
-         
-         
-                    
-        # Boundary conditions
-        shooter.x = max(shooter.size / 2, min(gw.X_MAX - shooter.size / 2, shooter.x))
-        shooter.y = max(shooter.size / 2, min(gw.Y_MAX - shooter.size / 2, shooter.y))
+        
+
+def input():
+        global LEFT, RIGHT
+        if stddraw.hasNextKeyTyped():
+            key = stddraw.nextKeyTyped()
+            if key == 'a':
+                LEFT = True
+                RIGHT = False
+            elif key == 'd':
+                LEFT = False
+                RIGHT = True
+            elif key == 's':
+                LEFT = False
+                Right = False
+
+def update_aim(shooter: Shooter):
+    global AIM_ANGLE
+    if LEFT:
+        AIM_ANGLE += ANGLE_STEP
+    elif RIGHT:
+        AIM_ANLGE -= ANGLE_STEP
+
+def shot_fired(shooter, missile_list):
+    from missiles import Missile
+    if stddraw.hasNextKeyTyped():
+        key = stddraw.nextKeyTyped()
+        if key == ' ':
+            missile_list.append(Missile(shooter.x, (shooter.y+0.02), self.angle))
         
         # inclue aiming code (missiles)
         #space bar control shooting
@@ -81,6 +99,18 @@ def rotate_shooter(shooter: Shooter, angle_degrees: float) -> None:
 
     # Replace original image with rotated one
     shooter.image = rotated
+
+def animate(shooter: Shooter, missile_list):
+
+    input()                 # Set LEFT / RIGHT flags
+    update_aim(shooter)     # Use those flags to adjust aim
+    shooter.update_pos()
+    shot_fired(shooter, missile_list)
+
+    shooter.draw()
+    for missile in missile_list:
+        missile.move()
+        missile.draw()
 
 
 def main():

@@ -15,6 +15,10 @@ gen_vx = 0.75
 gen_vy = -3
 mvx = -0.75
 
+SHOOTER_SIZE = 0.5
+SHOOTER_SPEED = 15
+SHOOTER_DIST = 0.1
+
 
 #Level 1 constants for enemies
 l1_rows = 2
