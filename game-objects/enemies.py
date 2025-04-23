@@ -165,14 +165,14 @@ def create_boss(x, y, e_pic):
 def load_level(level_num: int):
     """Creates enemies based on level number."""
     if level_num == 1:
-        return create_form4(4, 8, 1.0, 9.0, cons.e_pic1)
+        return create_form1(4, 8, 1.0, 9.0, cons.e_pic1)
     elif level_num == 2:
-        return create_form1(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
+        return create_form2(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
     elif level_num == 3:
-        return create_form2(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
+        return create_form3(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
     elif level_num == 4:
         pattern = [3, 4, 5]
-        return create_form3(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
+        return create_form4(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
     else:
         return []
 
