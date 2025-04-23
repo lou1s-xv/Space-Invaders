@@ -14,6 +14,7 @@ MISSILE_COLOR = stddraw.RED
 MISSILE_VELOCITY = 1 # this can be experimented with (in units/s)
 PI = math.pi
 ENEMY_POINT_VALUE = 10
+MISSILE_STR = "missile.jpg"
 
 class Missile:
 
@@ -31,8 +32,8 @@ class Missile:
         self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
 
     def draw_missile(self):
-        stddraw.setPenColor(MISSILE_COLOR)
-        stddraw.filledCircle(self.x, self.y, MISSILE_SIZE)
+        pic = Picture(MISSILE_STR)
+        stddraw.picture(pic, self.x, self.y, MISSILE_SIZE, MISSILE_SIZE)
 
 
 def detect_collision(missiles, enemies): # destroys missiles and enemies in collisions, as well as out of bounds missiles
