@@ -2,8 +2,12 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio # type: ignore
 from picture import Picture
-import constants as cons
-import gamewindow as gw
+import gameobjects.constants as cons
+import gameobjects.gamewindow as gw
+import threading
+import time
+
+music_thread = None
 
 class ene:
     x: float
@@ -75,6 +79,7 @@ def mbgen(enemies, rows: int, cols: int, vx: float, vy: float):
 
 def zoomcen(enemies, rows, cols, step_size, sx, sy):
   
+    global music_thread
     spacing = 0.55  # space between enemies
     targets = []
 
@@ -111,7 +116,18 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
         for enemy in enemies:
             enemy.draw_scaled(scale, cons.tw, cons.th)
         stddraw.show(10)
-    stddraw.show(2000)
+    stddraw.setFontSize(40)
+    stddraw.text(5, 5, "loading level 1...")
+    while music_thread.is_alive():
+        stddraw.show(cons.DT)
+
+def play_music():
+    stdaudio.playFile("Survivor - Eye Of The Tiger")
+
+def start_music():
+    global music_thread
+    music_thread = threading.Thread(target=play_music)
+    music_thread.start()
 
 def showtitle_sc():
 
@@ -121,8 +137,8 @@ def showtitle_sc():
     image4 = Picture("Portal.png")
     #frames = [image1, image2, image3]
     #frame_index = 0
-
-    enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "enemy.png")
+    start_music()
+    enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "gameobjects/enemy.png")
     #enemies2 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 0.8, 1.6, "enemy2.jpg")
     vx = cons.t_vx 
 
