@@ -6,10 +6,12 @@ import game-objects.missiles as ms
 from game-objects.shooter import Shooter
 import game-objects.gamewindow as gw
 import game-objects.env
+import titlesc as tit
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
     #title screen
+    tit.showtitle_sc()
     shooter = Shooter(...)
     enemies = []
     en_missiles = []
