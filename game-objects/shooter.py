@@ -38,13 +38,15 @@ class Shooter:
             if self.health == 0:
                 gameover()
                 
-    def update_pos():
+    def update_pos(self,missiles):
         if stddraw.hasNextKeyTyped():
             key = stddraw.nextKeyTyped()
             if key == stddraw.KEY_LEFT:
                 shooter.x -= shooter.speed
             if key == stddraw.KEY_RIGHT:
                 shooter.x += shooter.speed
+                
+        self.draw()
             
          
          
@@ -56,6 +58,7 @@ class Shooter:
         # inclue aiming code (missiles)
         #space bar control shooting
         # zero degree is initial angle, bounded between -90 and 90
+        # shooting be controlled by A and D.
         # function for rotating the shooter, and function for shooting.
 
 
