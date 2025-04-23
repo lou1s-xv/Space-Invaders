@@ -13,6 +13,7 @@ class Shooter:
         self.size = SHOOTER_SIZE
         self.speed = SHOOTER_SPEED
         self.color = stddraw.RED
+        self.lives = 3
         self.health = 100
 
     def draw(self):
@@ -50,8 +51,12 @@ class Shooter:
 
     def damage(self, damage):
         self.health = max(0, self.health - damage)
-        if self.health == 0:
-            stdio.writeln("Shooter is dead!")
+        while self.lives < 3:
+            if self.health == 0:
+                self.lives -= 1
+                
+            elif:
+                stdio.writeln("Shooter is dead!")
 
 def main():
     stddraw.clear()
