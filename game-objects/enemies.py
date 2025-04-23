@@ -6,6 +6,8 @@ import threading
 from picture import Picture
 import constants as cons
 from missiles import Missile
+import shooter as sh
+
 
  # Controls the speed
 VX = 0.025
@@ -26,8 +28,8 @@ class Enemy:
     
     #Moves the enemy based on input
     def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+        self.x += dx / gw.FPS
+        self.y += dy / gw.FPS
     
     #Draws the enemy based on image
     def draw(self):
@@ -217,10 +219,6 @@ def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, v
             hit_wall = True
             break
 
-    for enemy in enemies:
-        if (enemy.y - margin) < gw.Y_MIN:
-            running[0] = False
-
     if hit_wall:
         
         vx = -vx
@@ -239,6 +237,13 @@ def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, v
         enemy.draw()
 
     return vx
+
+def over_check(enemies, shooter):
+     for enemy in enemies:
+        if (enemy.y - margin) < gw.Y_MIN:
+            gw.gameover()
+        elif ((enemy.x - shooter.x) < cons.ENEMY_SIZE + sh.SHOOTER_SIZE) and ((enemy.y - shooter.y) < cons.ENEMY_SIZE + sh.SHOOTER_SIZE):
+            gw.gameover()
 
 
 def game_over():
