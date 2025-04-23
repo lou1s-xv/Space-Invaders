@@ -1,10 +1,10 @@
 import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio  # type: ignore
-import enemies as en
-import missiles as ms
-from shooter import Shooter
-import gamewindow as gw
+import game-objects.enemies as en
+import game-objects.missiles as ms
+from game-objects.shooter import Shooter
+import game-objects.gamewindow as gw
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
