@@ -12,7 +12,7 @@ def init():
     stddraw.setYscale(Y_MIN, Y_MAX)
 
 def show_window():
-    stddraw.show(1 / FPS)
+    stddraw.show(1000 / FPS)
 
 def add_points(points: int):
     global score
