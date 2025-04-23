@@ -7,6 +7,11 @@ from picture import Picture
 SHOOTER_SIZE = 0.5
 SHOOTER_SPEED = 0.2
 
+AIM_ANGLE = math.pi / 2
+ANGLE_STEP = math.pi / 90
+
+LEFT = False
+RIGHT = False
 
 class Shooter:
     def __init__(self, pos_x, pos_y, shooter_angle):
