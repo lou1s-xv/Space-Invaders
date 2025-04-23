@@ -26,14 +26,14 @@ class Missile:
         self.y = pos_y
         self.ang = ang
 
-    def update_pos(self): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
-        self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
-        self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
-
     def draw_missile(self):
         stddraw.setPenColor(MISSILE_COLOR)
         stddraw.filledCircle(self.x, self.y, MISSILE_SIZE)
 
+    def update_pos(self): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
+        self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
+        self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
+        self.draw_missile()
 
 def detect_collision(missiles, enemies): # destroys missiles and enemies in collisions, as well as out of bounds missiles
     for i in range(len(missiles)):
