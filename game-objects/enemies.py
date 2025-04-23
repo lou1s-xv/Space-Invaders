@@ -232,14 +232,6 @@ def over_check(enemies, shooter):
             gw.gameover()
 
 
-def game_over():
-    stddraw.clear(stddraw.BLACK)
-    stddraw.setPenColor(stddraw.WHITE)
-    stddraw.setFontSize(50)
-    stddraw.text(5, 5, "GAME OVER")
-    stddraw.show()
-    stddraw.pause(10000)
-
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
