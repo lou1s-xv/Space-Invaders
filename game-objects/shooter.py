@@ -27,8 +27,10 @@ class Shooter:
         height = self.y + self.size + 0.05
 
         # Health Bar background
+
         stddraw.setPenColor(stddraw.BLUE)
         stddraw.filledRectangle(width, height, bar_x, bar_y)
+
 
         # Health color
         health_width = bar_x * (self.health / 100)  
@@ -38,9 +40,9 @@ class Shooter:
             health_color = stddraw.YELLOW
         if self.health < 20:
             health_color = stddraw.RED
-
         stddraw.setPenColor(health_color)
         stddraw.filledRectangle(width, height, health_width, bar_y)
+
 
         # Health bar border
         stddraw.setPenColor(stddraw.BLACK)
