@@ -28,6 +28,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
                 en_missiles[i].update()
             ms.detect_collisions(missiles, enemies)
             ms.player_damage(en_missiles, shooter)
+            en.over_check()
             gw.show_window()
         lvl_num += 1
 
