@@ -7,6 +7,8 @@ Y_MIN = 0
 Y_MAX = 10
 FPS = 30
 score = 0
+GAME_END = False
+music_thread = None
 
 def init():
     stddraw.setXscale(X_MIN, X_MAX)
@@ -47,6 +49,14 @@ def game_over():
         f.close()
 
     #code for screen goes here
+
+def play_game_music():
+    while not GAME_END:
+        stdaudio.playFile("Street Fighter II Arcade Music")
+def start_game_music():
+    global music_thread
+    music_thread = threading.Thread(target=play_game_music)
+    music_thread.start()
 
 def main():
     pass

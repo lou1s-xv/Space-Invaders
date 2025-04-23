@@ -171,7 +171,7 @@ def load_level(level_num: int):
     elif level_num == 3:
         return create_form3(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
     elif level_num == 4:
-        pattern = [3, 4, 5]
+        pattern = cons.l3_pattern
         return create_form4(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
     else:
         return []
@@ -183,7 +183,7 @@ def create_mystery(x_pos: float, y_pos: float, pik: str):
 def maybe_fire_missile(enemies, en_missiles):
     for enemy in enemies:
         if stdrandom.uniformFloat(0, 1) < 0.001:
-            missile = Missile(enemy.x, enemy.y - 0.02, -180)
+            missile = Missile(enemy.x, enemy.y - 0.02, -math.pi)
             en_missiles.append(missile)
 
 
