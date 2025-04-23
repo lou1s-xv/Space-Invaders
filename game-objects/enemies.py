@@ -165,30 +165,16 @@ def create_boss(x, y, e_pic):
 def load_level(level_num: int):
     """Creates enemies based on level number."""
     if level_num == 1:
-        return enemies.create_form4(4, 8, 1.0, 9.0, cons.e_pic1)
+        return create_form4(4, 8, 1.0, 9.0, cons.e_pic1)
     elif level_num == 2:
-        return enemies.create_form1(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
+        return create_form1(2, 6, 0.7, 1.0, 9.0, cons.e_pic1, cons.e_pic2, cons.e_pic3)
     elif level_num == 3:
-        return enemies.create_form2(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
+        return create_form2(6, 11, 0.5, 9.0, 0.7, cons.e_pic2)
     elif level_num == 4:
         pattern = [3, 4, 5]
-        return enemies.create_form3(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
+        return create_form3(pattern, 5.0, 9.0, 0.65, cons.e_pic3)
     else:
         return []
-
-def run_level(level_num: int):
-    enemies_list = load_level(level_num)
-    running = [True]
-    vx = VX
-
-    while running[0]:
-        stddraw.clear(stddraw.BLACK)
-        vx = enemies.animate_forms(enemies_list, vx, VY, running)
-        stddraw.show(1000 // gw.FPS)
-
-    level_num += 1
-
-    return level_num
 
 def create_mystery(x_pos: float, y_pos: float, pik: str):
     blitzer = Enemy(x_pos, y_pos, pik)
@@ -208,7 +194,7 @@ def animate_mystery(mystery: Enemy, vx: float):
     mystery.move(vx, 0)
     mystery.draw()
 
-def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, vy: float, running: bool):
+def animate_forms(enemies: list[Enemy], en_missiles: list[missile], vx: float, vy: float):
 
     margin = cons.ENEMY_SIZE/2
 
