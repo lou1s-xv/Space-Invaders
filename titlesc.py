@@ -118,8 +118,8 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
         stddraw.show(10)
     stddraw.setFontSize(40)
     stddraw.text(5, 5, "loading level 1...")
-    while music_thread.is_alive():
-        stddraw.show(cons.DT)
+    #while music_thread.is_alive():
+    stddraw.show(cons.DT)
 
 def play_music():
     stdaudio.playFile("Survivor - Eye Of The Tiger")
@@ -132,7 +132,7 @@ def start_music():
 def showtitle_sc():
 
     image4 = Picture("Portal.png")
-    start_music()
+    #start_music()
     enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "gameobjects/enemy.png")
     vx = cons.t_vx
     showing_help = False
