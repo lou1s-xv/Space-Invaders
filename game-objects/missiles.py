@@ -63,8 +63,8 @@ def player_damage(missiles, shooter):
                     break
             if math.sqrt((missiles[i].x - shooter.x) ** 2 + (missiles[i].y - shooter.SHOOTER_DIST) ** 2) <= shooter.SHOOTER_SIZE:
                 missiles.pop(i)
-                shooter.health -= 1
                 stddraw.playFile("explosion.wav")
+                shooter.damage()
                 break
 # TODO: make module tests
 
