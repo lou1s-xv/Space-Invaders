@@ -131,42 +131,50 @@ def start_music():
 
 def showtitle_sc():
 
-    #image1 = Picture("starry1.jpg")
-    #image2 = Picture("starry2.jpg")
-    #image3 = Picture("starry3.jpg")
     image4 = Picture("Portal.png")
-    #frames = [image1, image2, image3]
-    #frame_index = 0
     start_music()
     enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "gameobjects/enemy.png")
-    #enemies2 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 0.8, 1.6, "enemy2.jpg")
-    vx = cons.t_vx 
+    vx = cons.t_vx
+    showing_help = False
 
     stddraw.setPenColor(stddraw.WHITE)
     while True:
+        
         stddraw.clear(stddraw.BLACK)
         stddraw.picture(image4, 4.5, 5, 15, 10)
+        
+        if showing_help:
 
-        vx = mbgen(enemies1, cons.l1_rows, cons.l1_cols, vx, 0)
-        #vx = mbgen(enemies2, cons.l1_rows, cons.l1_cols, vx, 0)
+            stddraw.clear(stddraw.BLACK)
+            stddraw.setFontSize(20)
+            stddraw.setPenColor(stddraw.WHITE)
+            stddraw.text(5, 9, "HELP")
+            stddraw.text(5, 7, "Use arrow keys to move.")
+            stddraw.text(5, 6, "Space to shoot.")
+            stddraw.text(5, 5, "Avoid getting hit!")
+            stddraw.text(5, 4, "press 'w' and 'h' to aim")
+            stddraw.text(5, 2, "Press H to return to the title screen.")
+        
+        else:
 
-        # Draw title text on top (unchanging)
-        #stddraw.setFontSize(40)
-        #stddraw.text(0, 2, "SPACE INVADERS")
-        stddraw.picture(Picture("Title.png"), 5, 5, 3, 3)
-        stddraw.setFontSize(20)
-        stddraw.text(5, 2, "Press SPACE to start...")
+            vx = mbgen(enemies1, cons.l1_rows, cons.l1_cols, vx, 0)
+
+            # Draw title text on top (unchanging)
+            stddraw.picture(Picture("Title.png"), 5, 5, 3, 3)
+            stddraw.setFontSize(20)
+            stddraw.text(5, 2, "Press SPACE to start...")
+            stddraw.text(5, 1.5, "Press H for Help")
+        
         stddraw.show(100)
-
-        #frame_index = (frame_index + 1) % len(frames)
 
         if stddraw.hasNextKeyTyped():
             key = stddraw.nextKeyTyped()
-            if key == ' ':
+            if key == 'h':
+                showing_help = not showing_help
+            elif key == ' ':
                 break
     
     zoomcen(enemies1, cons.l1_rows, cons.l1_cols, 0.01, 5, 8)
-    #zoomcen(enemies2, cons.l1_rows, cons.l1_cols, 0.01, -0.8, 0.8)
 
     stddraw.clear(stddraw.BLACK)
     stddraw.show(cons.DT)
