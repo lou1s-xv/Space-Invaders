@@ -16,7 +16,7 @@ def show_window():
     stddraw.show(1000 / FPS)
 
 def clear_window():
-    stddraw.clear()
+    stddraw.clear(stddraw.BLACK)
 
 def add_points(points: int):
     global score
