@@ -61,6 +61,27 @@ class Shooter:
         # shooting be controlled by A and D.
         # function for rotating the shooter, and function for shooting.
 
+def rotate_shooter(shooter: Shooter, angle_degrees: float) -> None:
+    theta = angle_degrees * math.pi / 180.0
+    w, h = shooter.image.width(), shooter.image.height()
+    cx, cy = w // 2, h // 2
+    cos_theta = math.cos(-theta)
+    sin_theta = math.sin(-theta)
+    rotated = Picture(w, h)
+
+    for tx in range(w):
+        for ty in range(h):
+            dx, dy = tx - cx, ty - cy
+            sx = int(dx * cos_theta - dy * sin_theta + cx)
+            sy = int(dx * sin_theta + dy * cos_theta + cy)
+            color = stddraw.BLACK
+            if 0 <= sx < w and 0 <= sy < h:
+                color = shooter.image.get(sx, sy)
+            rotated.set(tx, ty, color)
+
+    # Replace original image with rotated one
+    shooter.image = rotated
+
 
 def main():
     pass
