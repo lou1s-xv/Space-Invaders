@@ -65,8 +65,8 @@ class GameState:
     def check_game_over(self):
         if self.shooter.health <= 0 or en.over_check(self.enemies, self.shooter):
             self.game_over = True
-            gw.GAME_END = True #ends game music
-            #gameover screen (YOU LOSE DISPLAY) , self.handle_game_over()
+            gw.GAME_END = True 
+            self.handle_game_over()
 
     def check_player_win(self):
         if not self.enemies and (self.level > 5):
@@ -75,5 +75,8 @@ class GameState:
             self.handle_game_over()
     
     def handle_game_over(self):
-        gw.game_over(self)
+        if self.game_over:
+            gw.game_over()
+        elif self.player_win:
+            gw.player_win()
         self.__init__()  # Reset game

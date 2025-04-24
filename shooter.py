@@ -1,5 +1,6 @@
 import math
 import stddraw
+import stdaudio
 from picture import Picture
 import constants as cons
 import gamewindow as gw

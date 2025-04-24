@@ -130,7 +130,7 @@ def start_music():
     music_thread.start()
 
 def showtitle_sc():
-
+    
     image4 = Picture("Portal.png")
     start_music()
     enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "enemy.png")
