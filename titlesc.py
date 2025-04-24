@@ -130,9 +130,10 @@ def start_music():
     music_thread.start()
 
 def showtitle_sc():
-
+    global music_thread
     image4 = Picture("Portal.png")
     start_music()
+    stop = threading.Event()
     enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "enemy.png")
     vx = cons.t_vx
     showing_help = False
@@ -173,6 +174,8 @@ def showtitle_sc():
             if key == 'h':
                 showing_help = not showing_help
             elif key == ' ':
+                stop.set()
+                music_thread.join()
                 break
             elif key == 'q':
                 import sys

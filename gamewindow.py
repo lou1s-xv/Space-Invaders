@@ -1,9 +1,10 @@
 import stddraw
+import stdaudio
 import struct
 import math
 import time
 from picture import Picture
-from game_state import GameState
+import threading
 
 X_MIN = 0
 X_MAX = 10
@@ -46,7 +47,7 @@ def draw_health(health):
         stddraw.picture(heart, X_MAX - i * (HEART_WIDTH + HEART_DIST), Y_MAX - (HEART_WIDTH + HEART_DIST), HEART_WIDTH, HEART_WIDTH)
         
 
-def game_over(game: GameState):
+def game_over():
     
     # updating binary file with new hs
     f = open('hs', 'rb')
@@ -60,20 +61,29 @@ def game_over(game: GameState):
         f.close()
 
     #code for screen goes here
-    if game.player_win:
-         stddraw.clear(stddraw.BLACK)
-        stddraw.setPenColor(stddraw.WHITE)
-        stddraw.filledRectangle(2, 2, 6, 6)
-        stddraw.setPenColor(stddraw.CYAN)
-        stddraw.rectangle(2, 2, 6, 6)
-        stddraw.picture(Picture("Soldier.png"), 5, 5, 6, 6)
-        stddraw.picture(Picture("Victory.png"), 5, 5, 4, 4)
-        stddraw.picture(Picture("Fortnite.png"), 2, 8, 4, 2)
+    stddraw.clear(stddraw.BLACK)
+    stddraw.setPenColor(stddraw.WHITE)
 
-        stddraw.show(10000)
+    stddraw.picture(Picture("Fatality.png"), 5, 6, 7, 7)
+    threading.Thread(target=stdaudio.playFile, args=("GameOverSound",)).start()
+    stddraw.setFontSize(40)
+    stddraw.text(5, 2, "High Score: " + str(hs))
 
-    elif game.game_over:
-        #Gameover screen
+    stddraw.show(10000)
+
+def player_win():
+    
+    threading.Thread(target=stdaudio.playFile, args=("PlayerWinSound",)).start()
+    stddraw.clear(stddraw.BLACK)
+    stddraw.setPenColor(stddraw.WHITE)
+    stddraw.filledRectangle(2, 2, 6, 6)
+    stddraw.setPenColor(stddraw.CYAN)
+    stddraw.rectangle(2, 2, 6, 6)
+    stddraw.picture(Picture("Soldier.png"), 5, 5, 6, 6)
+    stddraw.picture(Picture("Victory.png"), 5, 5, 4, 4)
+    stddraw.picture(Picture("Fortnite.png"), 2, 8, 4, 2)
+
+    stddraw.show(10000)
 
 
 def play_game_music():
@@ -160,10 +170,20 @@ def _get_level_tip(level_num):
     return tips.get(level_num, "Tip: Destroy all enemies to advance!")
 
 
-    
+
+    stddraw.clear(stddraw.DARK_GRAY)
+
+    stddraw.picture(Picture("Splat.png"), 5, 5, 4, 4)
+    stddraw.picture(Picture("Fatality.png"), 5, 5, 4, 4)
+    threading.Thread(target=stdaudio.playFile, args=("something",))
+    stddraw.picture(Picture("dead_soldier.png"), 2, 9, 1, 1)
+
+    stddraw.show(10000)
 
 
 def main():
-    pass
+    init() 
+
+    game_over()
 if __name__ == "__main__":
     main()
