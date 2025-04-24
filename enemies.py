@@ -208,7 +208,7 @@ def animate_mystery(mystery: Enemy, vx: float):
     if mystery[0].x < gw.X_MIN:
         mystery.pop()
 
-def animate_forms(enemies: list[Enemy], en_missiles, vx: float, vy: float):
+def animate_forms(enemies: list[Enemy], vx: float, vy: float):
 
     margin = cons.ENEMY_SIZE/2
 
@@ -226,9 +226,6 @@ def animate_forms(enemies: list[Enemy], en_missiles, vx: float, vy: float):
         for enemy in enemies:
             enemy.move(0, vy)
         enemies[0].wall_hit()
-
-   #add function for enemy missiles
-    maybe_fire_missiles(enemies, en_missiles)
 
     for enemy in enemies:
         enemy.move(vx, 0)
