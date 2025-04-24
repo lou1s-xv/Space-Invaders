@@ -242,9 +242,9 @@ def over_check(enemies, shooter):
     margin = cons.ENEMY_SIZE / 2 
     for enemy in enemies:
         if (enemy.y - margin) < gw.Y_MIN:
-            gw.gameover()
+            gw.game_over()
         elif ((enemy.x - shooter.x) < cons.ENEMY_SIZE + cons.SHOOTER_SIZE) and ((enemy.y - shooter.y) < cons.ENEMY_SIZE + cons.SHOOTER_SIZE):
-            gw.gameover()
+            gw.game_over()
 
 
 

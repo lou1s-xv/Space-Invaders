@@ -1,6 +1,7 @@
 import gamewindow as gw
 from game_state import GameState
 from titlesc import showtitle_sc
+import stddraw
 
 def main() -> None:  # Need the return type for mypy to type-check the body
 
