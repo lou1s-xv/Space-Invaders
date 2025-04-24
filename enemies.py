@@ -25,6 +25,7 @@ class Enemy:
     def __init__(self, x: float, y: float, pic:str):
         self.x = x
         self.y = y
+        self.pic = pic
         self.image = Picture(pic) 
     
     #Moves the enemy based on input
