@@ -12,7 +12,7 @@ th = 0.25 #starting height on title screen
 
 #Enemy constants
 ENEMY_SIZE = 0.5
-gen_vx = 1
+gen_vx = 2
 gen_vy = -5
 mvx = -0.75
 

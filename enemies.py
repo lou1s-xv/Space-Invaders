@@ -91,7 +91,6 @@ def create_form2(rows: int, cols: int, x_start: float, y_start: float, spacing: 
         for j in range(en_row):
             x = start_x + j * d
             y = y_start - i * d
-            print(f"Enemy at row {i}, index {j}, pos ({x:.2f}, {y:.2f})")             
             enemies.append(Enemy(x, y, e_pic))
     
     return enemies

@@ -44,7 +44,7 @@ def draw_score():
 def draw_health(health):
     heart = Picture("heart_icon.png")
     for i in range(health):
-        stddraw.picture(heart, X_MAX - i * (HEART_WIDTH + HEART_DIST), Y_MAX - (HEART_WIDTH + HEART_DIST), HEART_WIDTH, HEART_WIDTH)
+        stddraw.picture(heart, X_MAX -HEART_WIDTH/2 - i * (HEART_WIDTH + HEART_DIST), Y_MAX - (HEART_WIDTH + HEART_DIST), HEART_WIDTH, HEART_WIDTH)
         
 
 def game_over():
