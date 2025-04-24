@@ -7,6 +7,7 @@ import gamewindow as gw
 import constants as cons
 import threading
 import shooter as sh
+from picture import Picture
 
 # X_MIN, X_MAX, Y_MIN, Y_MAX, FPS -> gamewindow.py
 
@@ -27,14 +28,14 @@ class Missile:
         self.x = pos_x
         self.y = pos_y
         self.ang = ang
+        self.pic = Picture("missile.jpg")
 
     def update_pos(self): # FPS is a constant stored somewhere idk (maybe in some module to manage the game window)
         self.x += MISSILE_VELOCITY * math.sin(self.ang) / gw.FPS
         self.y += MISSILE_VELOCITY * math.cos(self.ang) / gw.FPS
 
     def draw_missile(self):
-        stddraw.setPenColor(MISSILE_COLOR)
-        stddraw.filledCircle(self.x, self.y, MISSILE_SIZE)
+        stddraw.picture(self.pic, self.x, self.y, MISSILE_SIZE * 2, MISSILE_SIZE * 2)
 
 
 #def detect_collision(missiles, enemies, shooter): # destroys missiles and enemies in collisions, as well as out of bounds missiles
