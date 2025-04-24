@@ -29,8 +29,8 @@ class GameState:
             missile.update_pos()
         if self.level >= 3:
             en.maybe_fire_missiles(self.enemies, self.enemy_missiles)
-        for missile in self.enemy_missiles:
-            missile.update_pos()
+            for missile in self.enemy_missiles:
+                missile.update_pos()
         self.enemy_vx = en.animate_forms(self.enemies, self.enemy_missiles, self.enemy_vx, cons.gen_vy) 
         
         # Collision detection
