@@ -1,0 +1,123 @@
+Level 1 implementation:
+
+def main() -> None:  # Need the return type for mypy to type-check the body
+
+    stddraw.setXscale(gw.X_MIN, gw.X_MAX)
+    stddraw.setYscale(gw.Y_MIN, gw.Y_MAX)
+
+    stddraw.clear(stddraw.BLACK)
+
+    #Creating the various enemies
+    mystery = en.create_mystery(9, 9, "enemy4.jpg")
+    enemies_1 = en.create_form1(cons.inf_rows1, cons.inf_cols1, cons.inf_d, 5, 8, "enemy.png", "enemy2.jpg", "enemy3.jpg")
+
+    stddraw.setPenColor(stddraw.WHITE)
+
+    #vx has to be defined in main in order for the direction to be updated
+    vx = cons.inf_vx
+
+    #Game over check variable
+    running: list[bool] = [True]
+
+    tit.showtitle_sc()
+
+    while running[0]:
+
+
+        stddraw.clear(stddraw.BLACK)
+
+        #Used a function to create the enemies
+        #have to say vx equals the function so vx can be updated and the proper direction can be maintained
+        vx = en.animate_enemies(enemies_1, cons.inf_rows1, cons.inf_cols1, vx, cons.inf_vy, running)
+
+        en.animate_mystery(mystery, cons.mvx)
+
+        stddraw.show(cons.DT)
+
+    en.game_over()
+
+if __name__ == "__main__":
+    main()
+
+level 2:
+
+
+def main() -> None:  # Need the return type for mypy to type-check the body
+
+    stddraw.setXscale(gw.X_MIN, gw.X_MAX)
+    stddraw.setYscale(gw.Y_MIN, gw.Y_MAX)
+
+    stddraw.clear(stddraw.BLACK)
+
+    #Creating the various enemies
+    mystery = create_mystery(9, 9, "enemy4.jpg")
+    enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
+
+    stddraw.setPenColor(stddraw.WHITE)
+
+    #vx has to be defined in main in order for the direction to be updated
+    vx = cons.inf_vx
+
+    #Game over check variable
+    running: list[bool] = [True]
+
+    while running[0]:
+
+
+        stddraw.clear(stddraw.BLACK)
+
+        #Used a function to create the enemies
+        #have to say vx equals the function so vx can be updated and the proper direction can be maintained
+        vx = animate_form2(enemies, vx, cons.inf_vy, running)
+
+        animate_mystery(mystery, cons.mvx)
+
+        stddraw.show(cons.DT)
+
+    game_over()
+
+if __name__ == "__main__":
+    main()
+
+level 3:
+
+def main() -> None:  # Need the return type for mypy to type-check the body
+
+    stddraw.setXscale(gw.X_MIN, gw.X_MAX)
+    stddraw.setYscale(gw.Y_MIN, gw.Y_MAX)
+
+    stddraw.clear(stddraw.BLACK)
+
+    #Creating the various enemies
+    mystery = create_mystery(9, 9, "enemy4.jpg")
+    #enemies = create_form2(5, 10, 3, 8, 0.55, "enemypym.png")
+    enemies = create_form3(5, 8, 0.55, "enemydiamond.png")
+
+    stddraw.setPenColor(stddraw.WHITE)
+
+    #vx has to be defined in main in order for the direction to be updated
+    vx = cons.inf_vx
+
+    #Game over check variable
+    running: list[bool] = [True]
+
+    while running[0]:
+
+
+        stddraw.clear(stddraw.BLACK)
+
+        #Used a function to create the enemies
+        #have to say vx equals the function so vx can be updated and the proper direction can be maintained
+
+        #vx = animate_form2(enemies, vx, cons.inf_vy, running)
+
+        vx = animate_form3(enemies, vx, cons.inf_vy, running)
+
+        animate_mystery(mystery, cons.mvx)
+
+        stddraw.show(cons.DT)
+
+    game_over()
+
+if __name__ == "__main__":
+    main()

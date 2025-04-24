@@ -2,8 +2,8 @@ import sys
 import math
 import stdio, stdarray, stdrandom, stddraw, stdaudio # type: ignore
 from picture import Picture
-import gameobjects.constants as cons
-import gameobjects.gamewindow as gw
+import constants as cons
+import gamewindow as gw
 import threading
 import time
 
@@ -117,9 +117,9 @@ def zoomcen(enemies, rows, cols, step_size, sx, sy):
             enemy.draw_scaled(scale, cons.tw, cons.th)
         stddraw.show(10)
     stddraw.setFontSize(40)
-    stddraw.text(5, 5, "loading level 1...")
-    #while music_thread.is_alive():
-    stddraw.show(cons.DT)
+    gw.show_loading_screen(1)
+    while music_thread.is_alive():
+        stddraw.show(cons.DT)
 
 def play_music():
     stdaudio.playFile("Survivor - Eye Of The Tiger")
@@ -132,8 +132,8 @@ def start_music():
 def showtitle_sc():
 
     image4 = Picture("Portal.png")
-    #start_music()
-    enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "gameobjects/enemy.png")
+    start_music()
+    enemies1 = bgen(cons.l1_rows, cons.l1_cols, cons.l1_spacing, 5, 9, "enemy.png")
     vx = cons.t_vx
     showing_help = False
 
@@ -149,11 +149,12 @@ def showtitle_sc():
             stddraw.setFontSize(20)
             stddraw.setPenColor(stddraw.WHITE)
             stddraw.text(5, 9, "HELP")
-            stddraw.text(5, 7, "Use arrow keys to move.")
-            stddraw.text(5, 6, "Space to shoot.")
-            stddraw.text(5, 5, "Avoid getting hit!")
-            stddraw.text(5, 4, "press 'w' and 'h' to aim")
-            stddraw.text(5, 2, "Press H to return to the title screen.")
+            stddraw.text(5, 7, "Use 'A' and 'D' to move.")
+            stddraw.text(5, 6, "Press 'J' and 'L' to aim")
+            stddraw.text(5, 5, "Use 'S' to stop")
+            stddraw.text(5, 4, "Space to shoot.")
+            stddraw.text(5, 3, "Avoid getting hit!")
+            stddraw.text(5, 1.5, "Press H to return to the title screen.")
         
         else:
 
@@ -173,8 +174,14 @@ def showtitle_sc():
                 showing_help = not showing_help
             elif key == ' ':
                 break
+            elif key == 'q':
+                import sys
+                sys.exit()
     
-    zoomcen(enemies1, cons.l1_rows, cons.l1_cols, 0.01, 5, 8)
+    gw.show_loading_screen(1)
+    while music_thread.is_alive():
+        stddraw.show(cons.DT)
+
 
     stddraw.clear(stddraw.BLACK)
     stddraw.show(cons.DT)
