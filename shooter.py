@@ -58,6 +58,7 @@ class Shooter:
         
         # Boundary checking
         self.x = max(gw.X_MIN + 0.5, min(gw.X_MAX - 0.5, self.x))
+        self.angle = max((-math.pi/2), min(self.angle, (math.pi/2)))
         
         # Cooldown timer
         if self.cooldown > 0:
