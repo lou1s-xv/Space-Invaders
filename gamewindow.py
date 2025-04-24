@@ -40,8 +40,7 @@ def game_over():
     
     # updating binary file with new hs
     f = open('hs', 'rb')
-    ln = f.read()
-    hs = int(ln)
+    hs = struct.unpack('i', f.read(4))[0]
     f.close()
     if score > hs:
         hs = score
