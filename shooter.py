@@ -67,6 +67,9 @@ class Shooter:
         deg = round(math.degrees(self.angle) / 15) * 15
         image = self.rotated_cache.get(deg % 360, self._original)
         stddraw.picture(image, self.x, self.y, 1, 1)
+
+    def damage(self):
+        self.health -= 1
     
     
 def handle_input(shooter, missile_list):
