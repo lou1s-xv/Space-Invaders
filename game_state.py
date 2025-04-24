@@ -7,7 +7,7 @@ import constants as cons
 
 class GameState:
     def __init__(self):
-        self.shooter = shooter.Shooter(5, 1, math.pi/2)
+        self.shooter = shooter.Shooter(5, 1, 0)
         self.enemies = en.load_level(1)
         self.player_missiles = []
         self.enemy_missiles = []
@@ -29,7 +29,7 @@ class GameState:
             en.maybe_fire_missiles(self.enemies, self.enemy_missiles)
             for missile in self.enemy_missiles:
                 missile.update_pos()
-        self.enemy_vx = en.animate_forms(self.enemies, self.enemy_missiles, self.enemy_vx, -0.1) 
+        self.enemy_vx = en.animate_forms(self.enemies, self.enemy_missiles, self.enemy_vx, cons.gen_vy) 
         
         # Collision detection
         missiles.detect_collision(self.player_missiles, self.enemies, self.shooter)
