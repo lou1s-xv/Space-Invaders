@@ -102,6 +102,7 @@ def handle_input(shooter, missile_list):
         elif key == ' ' and shooter.cooldown <= 0:
             from missiles import Missile
             missile_list.append(Missile(shooter.x, shooter.y + 0.02, shooter.angle))
+            threading.Thread(target=stdaudio.playFile, args=("shoot",)).start()
             shooter.cooldown = 10  # Cooldown frames
             
         # Quit game
