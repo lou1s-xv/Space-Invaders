@@ -76,7 +76,7 @@ class GameState:
     
     def handle_game_over(self):
         if self.game_over:
-            gw.game_over(self)
+            gw.game_over()
         elif self.player_win:
             gw.player_win()
         self.__init__()  # Reset game
