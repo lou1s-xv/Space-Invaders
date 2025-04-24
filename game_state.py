@@ -32,7 +32,7 @@ class GameState:
         self.enemy_vx = en.animate_forms(self.enemies, self.enemy_missiles, self.enemy_vx, -0.1) 
         
         # Collision detection
-        missiles.detect_collision(self.player_missiles, self.enemies)
+        missiles.detect_collision(self.player_missiles, self.enemies, self.shooter)
         missiles.player_damage(self.enemy_missiles, self.shooter)
                
         # Game state checks
