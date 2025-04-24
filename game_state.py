@@ -4,6 +4,7 @@ import missiles
 import enemies as en
 import gamewindow as gw
 import constants as cons
+import env
 
 class GameState:
     def __init__(self):
@@ -41,10 +42,13 @@ class GameState:
     
     def draw(self):
         self.shooter.draw()
+        env.draw_bunkers()
         for missile in self.player_missiles:
             missile.draw_missile()
         for enemy in self.enemies:
             enemy.draw()
+        for en_missile in self.enemy_missiles:
+            en_missile.draw_missile()
         #Heart display will go here
         gw.draw_score()
     
