@@ -74,3 +74,6 @@ class GameState:
         gw.game_over(self)
         #Can take a GameState argument and display corresponding game over screen
         self.__init__()  # Reset game
+
+    def reset(self):
+        pass
