@@ -76,6 +76,7 @@ def detect_collision(missiles, enemies, shooter):
             k = 0
             while k < len(enemies) and k >= 0:
                 if math.sqrt((missiles[i].x - enemies[k].x) ** 2 + (missiles[i].y - enemies[k].y) ** 2) < cons.ENEMY_SIZE / 2:
+                    threading.Thread(target=stdaudio.playFile, args=("explosion",)).start()
                     if enemies[k].pic == "mystery.png":
                         if shooter.health < 3:
                             shooter.health += 1
@@ -111,6 +112,7 @@ def player_damage(missiles, shooter):
             if flag:
                 continue
             if math.sqrt((missiles[i].x - shooter.x) ** 2 + (missiles[i].y - cons.SHOOTER_DIST) ** 2) <= cons.SHOOTER_SIZE:
+                threading.Thread(target=stdaudio.playFile, args=("explosion",)).start()
                 missiles.pop(i)
                 shooter.damage()
                 i -= 1
