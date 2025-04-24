@@ -3,6 +3,7 @@ import struct
 import math
 import time
 from picture import Picture
+from game_state import GameState
 
 X_MIN = 0
 X_MAX = 10
@@ -45,7 +46,7 @@ def draw_health(health):
         stddraw.picture(heart, X_MAX - i * (HEART_WIDTH + HEART_DIST), Y_MAX - (HEART_WIDTH + HEART_DIST), HEART_WIDTH, HEART_WIDTH)
         
 
-def game_over():
+def game_over(game: GameState):
     
     # updating binary file with new hs
     f = open('hs', 'rb')
@@ -59,6 +60,21 @@ def game_over():
         f.close()
 
     #code for screen goes here
+    if game.player_win:
+         stddraw.clear(stddraw.BLACK)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.filledRectangle(2, 2, 6, 6)
+        stddraw.setPenColor(stddraw.CYAN)
+        stddraw.rectangle(2, 2, 6, 6)
+        stddraw.picture(Picture("Soldier.png"), 5, 5, 6, 6)
+        stddraw.picture(Picture("Victory.png"), 5, 5, 4, 4)
+        stddraw.picture(Picture("Fortnite.png"), 2, 8, 4, 2)
+
+        stddraw.show(10000)
+
+    elif game.game_over:
+        #Gameover screen
+
 
 def play_game_music():
     while not GAME_END:
@@ -143,29 +159,11 @@ def _get_level_tip(level_num):
     }
     return tips.get(level_num, "Tip: Destroy all enemies to advance!")
 
-def show_win_screen():
-    
-    stddraw.clear(stddraw.BLACK)
-    stddraw.setPenColor(stddraw.WHITE)
-    stddraw.filledRectangle(2, 2, 6, 6)
-    stddraw.setPenColor(stddraw.CYAN)
-    stddraw.rectangle(2, 2, 6, 6)
-    stddraw.picture(Picture("Soldier.png"), 5, 5, 6, 6)
-    stddraw.picture(Picture("Victory.png"), 5, 5, 4, 4)
-    stddraw.picture(Picture("Fortnite.png"), 2, 8, 4, 2)
-
-
-    stddraw.show(10000)
 
     
 
 
 def main():
-    
-    stddraw.setXscale(0, 10)
-    stddraw.setYscale(0, 10)
-
-    show_win_screen()
-
+    pass
 if __name__ == "__main__":
     main()

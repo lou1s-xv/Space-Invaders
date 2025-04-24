@@ -72,9 +72,8 @@ class GameState:
         if not self.enemies and (self.level > 5):
             self.player_win = True
             gw.GAME_END = True #ends game
-            #gameoverscreen (YOU WIN DISPLAY), self.handle_game_over()
+            self.handle_game_over()
     
     def handle_game_over(self):
         gw.game_over(self)
-        #Can take a GameState argument and display corresponding game over screen
         self.__init__()  # Reset game
