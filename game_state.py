@@ -51,6 +51,7 @@ class GameState:
         for en_missile in self.enemy_missiles:
             en_missile.draw_missile()
         #Heart display will go here
+        gw.draw_health(self.shooter.health)
         gw.draw_score()
     
     def check_level_complete(self):
