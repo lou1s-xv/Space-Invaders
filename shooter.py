@@ -34,8 +34,8 @@ class Shooter:
         rotated = Picture(w, h)
         cx, cy = w // 2, h // 2
 
-        for tx in range(0, w, 2):  # Optimization: skip every other pixel
-            for ty in range(0, h, 2):
+        for tx in range(0, w):
+            for ty in range(0, h):
                 dx, dy = tx - cx, ty - cy
                 sx = int(dx * math.cos(theta) - dy * math.sin(theta) + cx)
                 sy = int(dx * math.sin(theta) + dy * math.cos(theta) + cy)
