@@ -16,7 +16,7 @@ def main() -> None:  # Need the return type for mypy to type-check the body
         if game.game_over:
             gw.game_over()
             stddraw.show(2000)
-            game.reset()
+            game = GameState() # reinstantiates game state, showing title screen must form a part of the game state
             continue
             
         game.update()
