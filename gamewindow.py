@@ -182,8 +182,6 @@ def _get_level_tip(level_num):
 
 
 def main():
-    init() 
-
-    game_over()
+    pass
 if __name__ == "__main__":
     main()
