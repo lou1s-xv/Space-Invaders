@@ -143,8 +143,29 @@ def _get_level_tip(level_num):
     }
     return tips.get(level_num, "Tip: Destroy all enemies to advance!")
 
+def show_win_screen():
+    
+    stddraw.clear(stddraw.BLACK)
+    stddraw.setPenColor(stddraw.WHITE)
+    stddraw.filledRectangle(2, 2, 6, 6)
+    stddraw.setPenColor(stddraw.CYAN)
+    stddraw.rectangle(2, 2, 6, 6)
+    stddraw.picture(Picture("Soldier.png"), 5, 5, 6, 6)
+    stddraw.picture(Picture("Victory.png"), 5, 5, 4, 4)
+    stddraw.picture(Picture("Fortnite.png"), 2, 8, 4, 2)
+
+
+    stddraw.show(10000)
+
+    
+
+
 def main():
-    pass
+    
+    stddraw.setXscale(0, 10)
+    stddraw.setYscale(0, 10)
+
+    show_win_screen()
 
 if __name__ == "__main__":
     main()
