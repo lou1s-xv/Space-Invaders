@@ -5,11 +5,11 @@ import constants as cons
 BUNKER_NR = 3
 BUNKER_THICKNESS = 0.1
 BUNKER_DIST_SHTR = 0.15
-BUNKER_DIST = cons.SHOOTER_DIST + cons.SHOOTER_SIZE + BUNKER_DIST_SHTR
+BUNKER_DIST = cons.SHOOTER_DIST + cons.SHOOTER_SIZE*2 + BUNKER_DIST_SHTR + 1 # (+1 becoz the shooter is 1 above X_MIN)
 BUNKER_WIDTH = (gw.X_MAX - gw.X_MIN) / (2 * BUNKER_NR + 1)
 
 def draw_bunkers(): # if shooter behind bunker, disable shooting
-    stddraw.setPenColor(stddraw.BLACK)
+    stddraw.setPenColor(stddraw.LIGHT_GRAY)
     for i in range(BUNKER_NR):
         stddraw.filledRectangle(gw.X_MIN + BUNKER_WIDTH * (2 * i + 1), gw.Y_MIN + BUNKER_DIST, BUNKER_WIDTH, BUNKER_THICKNESS)
 
