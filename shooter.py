@@ -52,12 +52,13 @@ class Shooter:
             
         # Handle continuous rotation
         if self.rotating_left:
-            self.angle = min(math.pi, self.angle - cons.ANGLE_STEP)
+            self.angle = max((-math.pi/2), self.angle - cons.ANGLE_STEP)
         if self.rotating_right:
-            self.angle = max(0, self.angle + cons.ANGLE_STEP)
+            self.angle = min((math.pi/2), self.angle + cons.ANGLE_STEP)
         
         # Boundary checking
         self.x = max(gw.X_MIN + 0.5, min(gw.X_MAX - 0.5, self.x))
+        self.angle = max((-math.pi/2), min(self.angle, (math.pi/2)))
         
         # Cooldown timer
         if self.cooldown > 0:

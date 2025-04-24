@@ -71,7 +71,7 @@ def show_loading_screen(level_num):
     loading_complete = False
     
     # Animation parameters
-    total_duration = 7  # seconds
+    total_duration = 10  # seconds
     pulse_frequency = 2.0  # dots animation speed
     
     # Loading animation loop
@@ -128,9 +128,9 @@ def _get_level_tip(level_num):
     """Returns level-specific loading tips"""
     tips = {
         1: "Tip: Aim carefully at the formation patterns!",
-        2: "Tip: Enemies move faster as their numbers decrease!",
-        3: "Tip: Watch for the boss's special attacks!",
-        4: "Tip: Use bunkers for temporary protection!"
+        2: "Tip: Enemies are on the lose, WATCH OUT!",
+        3: "Tip: Use bunkers for temporary protection!",
+        4: "Tip: The boss is las YOU can take him!"
     }
     return tips.get(level_num, "Tip: Destroy all enemies to advance!")
 
