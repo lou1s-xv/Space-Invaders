@@ -182,7 +182,6 @@ def showtitle_sc():
     while music_thread.is_alive():
         stddraw.show(cons.DT)
 
-
     stddraw.clear(stddraw.BLACK)
     stddraw.show(cons.DT)
 

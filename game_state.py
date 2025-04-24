@@ -63,13 +63,13 @@ class GameState:
     def check_game_over(self):
         if self.shooter.health <= 0 or en.over_check(self.enemies, self.shooter):
             self.game_over = True
-            gw.GAME_END = True 
+            gw.GAME_END = True
             self.handle_game_over()
 
     def check_player_win(self):
         if not self.enemies and (self.level > 5):
             self.player_win = True
-            gw.GAME_END = True #ends game
+            gw.GAME_END = True
             self.handle_game_over()
     
     def handle_game_over(self):

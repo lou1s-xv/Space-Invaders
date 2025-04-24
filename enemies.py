@@ -43,7 +43,7 @@ class Enemy:
 
 class Boss(Enemy):
 
-    def __init__(self, x, y, str):
+    def __init__(self, x, y, pic):
         super().__init__(x, y, pic) #inherit all methods
         self.health = BOSS_MAX_HEALTH
 
@@ -162,6 +162,8 @@ def create_boss(x, y, e_pic):
 
     enemies = []
     enemies.append(Boss(x, y, e_pic))
+
+    return enemies
 
 def load_level(level_num: int):
     #Creates enemies based on level number.
