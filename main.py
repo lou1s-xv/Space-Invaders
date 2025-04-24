@@ -6,12 +6,16 @@ import stddraw
 def main() -> None:  # Need the return type for mypy to type-check the body
 
     gw.init()
-    showtitle_sc()
+    
     
     game = GameState()
     
     while True:
         gw.clear_window()
+
+        if game.title_screen:
+            showtitle_sc()
+            game.title_screen = False
         
         if game.game_over:
             gw.game_over()
