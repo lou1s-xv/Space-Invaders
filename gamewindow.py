@@ -2,6 +2,7 @@ import stddraw
 import struct
 import math
 import time
+from picture import Picture
 
 X_MIN = 0
 X_MAX = 10
@@ -11,6 +12,8 @@ FPS = 30
 score = 0
 GAME_END = False
 music_thread = None
+HEART_WIDTH = 0.75
+HEART_DIST = 0.25
 
 def init():
     stddraw.setXscale(X_MIN, X_MAX)
@@ -35,6 +38,12 @@ def draw_score():
 
     stddraw.setPenColor(stddraw.CYAN)
     stddraw.text(x, y, f"Score: {score}")
+
+def draw_health(health):
+    heart = Picture("heart_icon.png")
+    for i in range(health):
+        stddraw.picture(heart, X_MAX - i * (HEART_WIDTH + HEART_DIST), Y_MAX - (HEART_WIDTH + HEART_DIST), HEART_WIDTH, HEART_WIDTH)
+        
 
 def game_over():
     
