@@ -56,6 +56,8 @@ class GameState:
     def check_level_complete(self):
         if not self.enemies:
             self.level += 1
+            self.enemy_missiles = []
+            self.player_missiles = []
             self.enemies = en.load_level(self.level)#changes enemy formation for next level
             gw.show_loading_screen(self.level) #Display loading screen
     
