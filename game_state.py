@@ -17,6 +17,7 @@ class GameState:
         self.enemy_vx = cons.gen_vx
         self.game_over = False
         self.player_win = False
+        self.ts = True
         
     def update(self):
         # Input handling
