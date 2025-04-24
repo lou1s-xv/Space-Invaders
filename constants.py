@@ -17,7 +17,7 @@ gen_vy = -5
 mvx = -0.75
 
 SHOOTER_SIZE = 0.5
-SHOOTER_SPEED = 15
+SHOOTER_SPEED = 4
 SHOOTER_DIST = 0.1
 ANGLE_STEP = math.pi / 90
 
