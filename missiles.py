@@ -14,7 +14,7 @@ from picture import Picture
 # constants
 MISSILE_SIZE = 0.1
 MISSILE_COLOR = stddraw.RED
-MISSILE_VELOCITY = 3 # this can be experimented with (in units/s)
+MISSILE_VELOCITY = 8 # this can be experimented with (in units/s)
 PI = math.pi
 ENEMY_POINT_VALUE = 10
 

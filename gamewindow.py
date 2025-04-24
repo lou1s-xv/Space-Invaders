@@ -98,6 +98,10 @@ def show_loading_screen(level_num):
     """Displays an animated loading screen with level-specific message"""
     stddraw.clear(stddraw.BLACK)
     
+    if level_num > 1:
+        music_thread = threading.Thread(target=stdaudio.playFile, args=("Street Fighter II Arcade Music",))
+        music_thread.start()
+
     # Loading screen elements
     base_text = f"LOADING LEVEL {level_num}"
     animated_text = base_text
@@ -106,7 +110,7 @@ def show_loading_screen(level_num):
     loading_complete = False
     
     # Animation parameters
-    total_duration = 10  # seconds
+    total_duration = 11  # seconds
     pulse_frequency = 2.0  # dots animation speed
     
     # Loading animation loop

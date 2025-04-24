@@ -42,7 +42,7 @@ l2_ystart = 8
 
 
 #Level 3 constants for enemies
-l3_pattern = [1, 3, 5, 3, 1]
+l3_pattern = [1, 3, 1]
 l3_xcen = 5
 l3_ystart = 8
 l3_spacing = 0.55
