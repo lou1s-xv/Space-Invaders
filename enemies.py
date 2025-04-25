@@ -54,7 +54,7 @@ class Boss(Enemy):
 
         # Optional: Draw a health bar above the boss
         bar_width = 6
-        bar_height = 1.5
+        bar_height = 0.05
         health_ratio = self.health / BOSS_MAX_HEALTH
 
         stddraw.setPenColor(stddraw.GRAY)
