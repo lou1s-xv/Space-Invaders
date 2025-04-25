@@ -166,10 +166,11 @@ def show_loading_screen(level_num):
 def _get_level_tip(level_num):
     """Returns level-specific loading tips"""
     tips = {
-        1: "Tip: Aim carefully at the formation patterns!",
+        1: "Tip: Aim carefully, it's the OPS!",
         2: "Tip: Enemies are on the lose, WATCH OUT!",
         3: "Tip: Use bunkers for temporary protection!",
-        4: "Tip: The boss is las YOU can take him!"
+        4: "Tip: Pancake! Sorry just testing if people actually read these",
+        5: "Tip: The boss is las man, you GOT this!"
     }
     return tips.get(level_num, "Tip: Destroy all enemies to advance!")
 

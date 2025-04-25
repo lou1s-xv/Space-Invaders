@@ -47,6 +47,25 @@ class Boss(Enemy):
         super().__init__(x, y, pic) #inherit all methods
         self.health = BOSS_MAX_HEALTH
 
+    def draw(self):
+
+        #  Draw the image
+        stddraw.picture(self.image, self.x, self.y, cons.BOSS_SIZE, cons.BOSS_SIZE)
+
+        # Optional: Draw a health bar above the boss
+        bar_width = 6
+        bar_height = 1.5
+        health_ratio = self.health / BOSS_MAX_HEALTH
+
+        stddraw.setPenColor(stddraw.GRAY)
+        stddraw.filledRectangle(2, 8.25, bar_width, bar_height)
+
+        stddraw.setPenColor(stddraw.RED)
+        stddraw.filledRectangle(2, 8.25, bar_width * health_ratio, bar_height)
+
+        stddraw.setPenColor(stddraw.GRAY)
+        stddraw.rectangle(5, 8.25, bar_width, bar_height)
+
 def create_form1(rows: int, cols: int, distance, x_start: float, y_start: float, e_pic1: str, e_pic2: str, e_pic3: str) -> list[Enemy]:
     
     #creating a infantry ranks formation
@@ -170,7 +189,7 @@ def load_level(level_num: int):
     if level_num == 1:
         return create_form1(2, 6, 0.7, 1.0, 9.0, "enemy.png", "enemy2.png", "enemy3.png")
     elif level_num == 2:
-        return create_form4(4, 8, 1.0, 9.0, "enemycheck.png")
+        return create_form4(6, 12, 1.0, 9.0, "enemycheck.png")
     elif level_num == 3:
         return create_form2(6, 12, 0.5, 9.0, 0.7, "enemypym.png")
     elif level_num == 4:
@@ -240,9 +259,9 @@ def over_check(enemies, shooter):
     margin = cons.ENEMY_SIZE / 2 
     for enemy in enemies:
         if (enemy.y - margin) < gw.Y_MIN:
-            gw.game_over()
+            return True
         elif ((enemy.x - shooter.x) < cons.ENEMY_SIZE + cons.SHOOTER_SIZE) and ((enemy.y - shooter.y) < cons.ENEMY_SIZE + cons.SHOOTER_SIZE):
-            gw.game_over()
+            return True
 
 
 
