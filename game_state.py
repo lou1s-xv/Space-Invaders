@@ -40,6 +40,7 @@ class GameState:
         # Game state checks
         self.check_level_complete()
         self.check_game_over()
+        self.check_player_win()
     
     def draw(self):
         self.shooter.draw()
@@ -54,11 +55,16 @@ class GameState:
     
     def check_level_complete(self):
         if not self.enemies:
-            self.level += 1
             self.enemy_missiles = []
             self.player_missiles = []
-            self.enemies = en.load_level(self.level)#changes enemy formation for next level
-            gw.show_loading_screen(self.level) #Display loading screen
+            if self.level <= 5:
+                self.level += 1
+            if self.level == 5:
+                self.enemy_vx = self.enemy_vx * 5
+            if self.level < 5:
+                self.enemies = en.load_level(self.level)#changes enemy formation for next level
+                gw.show_loading_screen(self.level) #Display loading screen
+
     
     def check_game_over(self):
         if self.shooter.health <= 0 or en.over_check(self.enemies, self.shooter):

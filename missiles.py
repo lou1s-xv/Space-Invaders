@@ -14,7 +14,7 @@ from picture import Picture
 # constants
 MISSILE_SIZE = 0.1
 MISSILE_COLOR = stddraw.RED
-MISSILE_VELOCITY = 8 # this can be experimented with (in units/s)
+MISSILE_VELOCITY = 4.5 # this can be experimented with (in units/s)
 PI = math.pi
 ENEMY_POINT_VALUE = 10
 
@@ -75,7 +75,13 @@ def detect_collision(missiles, enemies, shooter):
                 continue
             k = 0
             while k < len(enemies) and k >= 0:
-                if math.sqrt((missiles[i].x - enemies[k].x) ** 2 + (missiles[i].y - enemies[k].y) ** 2) < cons.ENEMY_SIZE / 2:
+                
+                if isinstance(enemies[k], en.Boss):
+                    collision_size = cons.BOSS_SIZE
+                else:
+                    collision_size = cons.ENEMY_SIZE
+
+                if math.sqrt((missiles[i].x - enemies[k].x) ** 2 + (missiles[i].y - enemies[k].y) ** 2) < collision_size / 2:
                     threading.Thread(target=stdaudio.playFile, args=("explosion",)).start()
                     if enemies[k].pic == "mystery.png":
                         if shooter.health < 3:
